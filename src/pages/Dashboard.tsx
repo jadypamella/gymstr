@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
@@ -13,6 +14,7 @@ import {
   CircleUser,
   LogOut,
   User,
+  Wallet,
   Zap
 } from 'lucide-react';
 import {
@@ -51,8 +53,6 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
 import GymCard from '@/components/GymCard';
 import Footer from '@/components/Footer';
 import GymMap from '@/components/GymMap';
@@ -65,7 +65,6 @@ const Dashboard = () => {
   const [isDetailsDialogOpen, setIsDetailsDialogOpen] = useState(false);
   const [isMembershipDialogOpen, setIsMembershipDialogOpen] = useState(false);
   const [selectedGym, setSelectedGym] = useState(null);
-  const [selectedMembershipType, setSelectedMembershipType] = useState('monthly');
 
   const filters = ['All', 'Nearby', 'Popular', 'New', 'Weights', 'Cardio', 'Yoga'];
 
@@ -155,10 +154,10 @@ const Dashboard = () => {
   
   const openMembershipDialog = (gym) => {
     setSelectedGym(gym);
-    setSelectedMembershipType('monthly');
     setIsMembershipDialogOpen(true);
   };
 
+  // User data
   const user = {
     name: "Alex Johnson",
     location: "São Paulo, Brazil",
@@ -171,6 +170,7 @@ const Dashboard = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-gymstr-navy text-gymstr-beige">
+      {/* Header/Navigation Bar */}
       <header className="sticky top-0 z-30 bg-[#0F172A]/90 backdrop-blur-md border-b border-white/10 px-4 py-4">
         <div className="container mx-auto flex items-center justify-between">
           <a href="/dashboard" className="flex items-center">
@@ -189,6 +189,7 @@ const Dashboard = () => {
             </Button>
           </div>
 
+          {/* Mobile menu button */}
           <button 
             className="md:hidden text-gymstr-beige p-2"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -197,6 +198,7 @@ const Dashboard = () => {
           </button>
         </div>
 
+        {/* Mobile menu */}
         {isMobileMenuOpen && (
           <div className="md:hidden absolute left-0 right-0 bg-[#0F172A]/95 backdrop-blur-md border-b border-white/10 z-20">
             <div className="container mx-auto py-4 px-4">
@@ -227,6 +229,7 @@ const Dashboard = () => {
         )}
       </header>
 
+      {/* Welcome Section */}
       <div className="bg-[#1A2235] p-4 md:p-6 border-b border-white/10">
         <div className="container mx-auto">
           <div className="flex flex-col md:flex-row items-center md:items-start gap-4">
@@ -265,7 +268,9 @@ const Dashboard = () => {
         </div>
       </div>
 
+      {/* Main Content */}
       <main className="flex-1 container mx-auto px-4 py-6">
+        {/* Search and filter */}
         <div className="flex flex-col sm:flex-row gap-3 mb-6">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gymstr-beige/50" size={18} />
@@ -307,6 +312,7 @@ const Dashboard = () => {
           </Drawer>
         </div>
 
+        {/* Map Section */}
         <section className="mb-10">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-bold">Nearby Gyms Map</h2>
@@ -315,6 +321,7 @@ const Dashboard = () => {
           <GymMap />
         </section>
 
+        {/* Top Picks Section */}
         <section className="mb-10">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-bold">Top Picks</h2>
@@ -392,6 +399,7 @@ const Dashboard = () => {
           </div>
         </section>
 
+        {/* Nearby Gyms Section */}
         <section className="mb-10">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-bold">Nearby Gyms</h2>
@@ -440,6 +448,7 @@ const Dashboard = () => {
           </ScrollArea>
         </section>
 
+        {/* Popular Gyms Section */}
         <section>
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-bold">Popular Gyms</h2>
@@ -497,6 +506,7 @@ const Dashboard = () => {
         </section>
       </main>
 
+      {/* Gym Details Dialog */}
       <Dialog open={isDetailsDialogOpen} onOpenChange={setIsDetailsDialogOpen}>
         <DialogContent className="bg-[#1A2235] text-gymstr-beige border-white/10 max-w-2xl">
           <DialogHeader>
@@ -575,6 +585,7 @@ const Dashboard = () => {
         </DialogContent>
       </Dialog>
 
+      {/* Membership Dialog */}
       <Dialog open={isMembershipDialogOpen} onOpenChange={setIsMembershipDialogOpen}>
         <DialogContent className="bg-[#1A2235] text-gymstr-beige border-white/10">
           <DialogHeader>
@@ -586,63 +597,43 @@ const Dashboard = () => {
           
           {selectedGym && (
             <div className="space-y-4">
-              <RadioGroup 
-                value={selectedMembershipType} 
-                onValueChange={setSelectedMembershipType}
-                className="space-y-3"
-              >
-                <div className={`bg-gymstr-beige/5 p-4 rounded-md border ${
-                  selectedMembershipType === 'monthly' ? 'border-gymstr-orange' : 'border-white/10'
-                } flex justify-between items-center relative`}>
-                  <div className="flex items-center gap-3">
-                    <RadioGroupItem value="monthly" id="monthly" className="text-gymstr-orange" />
-                    <div>
-                      <Label htmlFor="monthly" className="text-base font-medium">Monthly Membership</Label>
-                      <p className="text-sm text-gymstr-beige/60">Full access to all facilities</p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <div className="font-bold">$50/month</div>
-                    <div className="text-xs text-gymstr-beige/60">No commitment</div>
-                  </div>
+              {/* Membership plans */}
+              <div className="bg-gymstr-beige/5 p-4 rounded-md border border-white/10 flex justify-between items-center">
+                <div>
+                  <h3 className="font-medium">Monthly Membership</h3>
+                  <p className="text-sm text-gymstr-beige/60">Full access to all facilities</p>
                 </div>
-                
-                <div className={`bg-gymstr-beige/5 p-4 rounded-md border ${
-                  selectedMembershipType === 'annual' ? 'border-gymstr-orange' : 'border-white/10'
-                } flex justify-between items-center relative`}>
-                  <div className="flex items-center gap-3">
-                    <RadioGroupItem value="annual" id="annual" className="text-gymstr-orange" />
-                    <div>
-                      <Label htmlFor="annual" className="text-base font-medium">Annual Membership</Label>
-                      <p className="text-sm text-gymstr-beige/60">Save 20% with annual billing</p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <div className="font-bold">$480/year</div>
-                    <div className="text-xs text-gymstr-beige/60">$40/month equivalent</div>
-                  </div>
+                <div className="text-right">
+                  <div className="font-bold">$50/month</div>
+                  <div className="text-xs text-gymstr-beige/60">No commitment</div>
                 </div>
-                
-                <div className={`bg-gymstr-beige/5 p-4 rounded-md border ${
-                  selectedMembershipType === 'daypass' ? 'border-gymstr-orange' : 'border-white/10'
-                } flex justify-between items-center relative`}>
-                  <div className="flex items-center gap-3">
-                    <RadioGroupItem value="daypass" id="daypass" className="text-gymstr-orange" />
-                    <div>
-                      <Label htmlFor="daypass" className="text-base font-medium">Day Pass</Label>
-                      <p className="text-sm text-gymstr-beige/60">24-hour access</p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <div className="font-bold">$15</div>
-                    <div className="text-xs text-gymstr-beige/60">One-time payment</div>
-                  </div>
+              </div>
+              
+              <div className="bg-gymstr-beige/5 p-4 rounded-md border border-white/10 flex justify-between items-center">
+                <div>
+                  <h3 className="font-medium">Annual Membership</h3>
+                  <p className="text-sm text-gymstr-beige/60">Save 20% with annual billing</p>
                 </div>
-              </RadioGroup>
+                <div className="text-right">
+                  <div className="font-bold">$480/year</div>
+                  <div className="text-xs text-gymstr-beige/60">$40/month equivalent</div>
+                </div>
+              </div>
+              
+              <div className="bg-gymstr-beige/5 p-4 rounded-md border border-white/10 flex justify-between items-center">
+                <div>
+                  <h3 className="font-medium">Day Pass</h3>
+                  <p className="text-sm text-gymstr-beige/60">24-hour access</p>
+                </div>
+                <div className="text-right">
+                  <div className="font-bold">$15</div>
+                  <div className="text-xs text-gymstr-beige/60">One-time payment</div>
+                </div>
+              </div>
               
               <div className="bg-gymstr-beige/5 p-4 rounded-md border-white/10">
                 <h3 className="font-medium mb-3">Payment Method</h3>
-                <div className="flex items-center gap-3 p-3 bg-gymstr-navy/50 rounded-md border border-gymstr-orange/30">
+                <div className="flex items-center gap-3 p-3 bg-gymstr-navy/50 rounded-md">
                   <Zap size={24} className="text-gymstr-orange fill-gymstr-orange/30" />
                   <div>
                     <div className="font-medium">Pay with Nostr</div>
@@ -662,6 +653,7 @@ const Dashboard = () => {
         </DialogContent>
       </Dialog>
 
+      {/* Footer */}
       <Footer />
     </div>
   );
