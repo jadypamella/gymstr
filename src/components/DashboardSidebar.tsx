@@ -22,7 +22,7 @@ export function DashboardSidebar() {
   const location = useLocation();
   const isActive = (path: string) => location.pathname === path;
 
-  // Dashboard navigation items - settings menu removed
+  // Dashboard navigation items - wallet menu item removed
   const navItems = [
     {
       title: "Dashboard",
