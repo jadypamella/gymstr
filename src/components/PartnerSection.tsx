@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Button from './Button';
 import GymCard from './GymCard';
@@ -6,11 +5,14 @@ import GymDetailsDialog, { GymDetailsProps } from './GymDetailsDialog';
 import LoginModal from './LoginModal';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet';
 import { Check, Lock, Zap, Globe } from 'lucide-react';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const PartnerSection = () => {
   const [selectedGym, setSelectedGym] = useState<GymDetailsProps | null>(null);
   const [showGymDetails, setShowGymDetails] = useState(false);
   const [showMembershipDialog, setShowMembershipDialog] = useState(false);
+  const [selectedMembership, setSelectedMembership] = useState('monthly');
 
   const partnerGyms = [
     {
@@ -75,6 +77,27 @@ const PartnerSection = () => {
     "Equinox", "Planet Fitness", "Gold's Gym", "Anytime Fitness", 
     "LA Fitness", "24 Hour Fitness", "Crunch Fitness", "Orange Theory"
   ];
+
+  const membershipOptions = {
+    monthly: {
+      name: "Monthly Membership",
+      price: "$29.99",
+      sats: "83,000",
+      btc: "0.00083000"
+    },
+    annual: {
+      name: "Annual Membership",
+      price: "$249.99",
+      sats: "695,000",
+      btc: "0.00695000"
+    },
+    daily: {
+      name: "Day Pass",
+      price: "$9.99",
+      sats: "27,000",
+      btc: "0.00027000"
+    }
+  };
 
   const handleViewDetails = (gym: GymDetailsProps) => {
     setSelectedGym(gym);
@@ -153,101 +176,112 @@ const PartnerSection = () => {
         <Sheet open={showMembershipDialog} onOpenChange={setShowMembershipDialog}>
           <SheetContent className="sm:max-w-md bg-[#1E293B] text-[#E2E8F0] border-l-white/10">
             <SheetHeader>
-              <SheetTitle className="text-[#E2E8F0]">Membership</SheetTitle>
+              <SheetTitle className="text-[#E2E8F0]">Start Membership</SheetTitle>
               <SheetDescription className="text-[#E2E8F0]/70">
                 Subscribe to {selectedGym.name}
               </SheetDescription>
             </SheetHeader>
             
-            <div className="py-6">
-              <div className="bg-[#111827] rounded-lg p-4 mb-6 border border-white/10">
-                <h3 className="font-medium mb-3">{selectedGym.name}</h3>
-                <div className="flex justify-between mb-3">
-                  <span className="text-[#E2E8F0]/70">Monthly Membership</span>
-                  <span className="font-medium">$29.99</span>
-                </div>
-                <div className="flex justify-between mb-4 text-sm">
-                  <span className="text-[#E2E8F0]/70">≈ 83,000 sats</span>
-                  <span className="text-[#F7931A]">0.00083000 BTC</span>
+            <ScrollArea className="h-[calc(100vh-8rem)] pr-4">
+              <div className="py-6">
+                <div className="bg-[#111827] rounded-lg p-4 mb-6 border border-white/10">
+                  <h3 className="font-medium mb-3">{selectedGym.name}</h3>
+                  
+                  <Tabs defaultValue="monthly" value={selectedMembership} onValueChange={setSelectedMembership} className="mb-3">
+                    <TabsList className="bg-[#1E293B] w-full">
+                      <TabsTrigger value="monthly" className="flex-1">Monthly</TabsTrigger>
+                      <TabsTrigger value="annual" className="flex-1">Annual</TabsTrigger>
+                      <TabsTrigger value="daily" className="flex-1">Day Pass</TabsTrigger>
+                    </TabsList>
+                  </Tabs>
+                  
+                  <div className="flex justify-between mb-3">
+                    <span className="text-[#E2E8F0]/70">{membershipOptions[selectedMembership].name}</span>
+                    <span className="font-medium">{membershipOptions[selectedMembership].price}</span>
+                  </div>
+                  <div className="flex justify-between mb-4 text-sm">
+                    <span className="text-[#E2E8F0]/70">≈ {membershipOptions[selectedMembership].sats} sats</span>
+                    <span className="text-[#F7931A]">{membershipOptions[selectedMembership].btc} BTC</span>
+                  </div>
+                  
+                  <div className="rounded-lg bg-white p-4 flex justify-center">
+                    <div className="w-36 h-36 bg-black flex items-center justify-center">
+                      <Zap size={48} className="text-white" />
+                    </div>
+                  </div>
+                  <button className="mt-3 text-sm text-center w-full py-2 border border-white/20 rounded-md hover:bg-white/5 transition-colors">
+                    Copy Invoice
+                  </button>
                 </div>
                 
-                <div className="rounded-lg bg-white p-4 flex justify-center">
-                  <div className="w-36 h-36 bg-black flex items-center justify-center">
-                    <Zap size={48} className="text-white" />
-                  </div>
+                <div className="bg-[#1F2937] rounded-lg p-4 border border-white/10">
+                  <h4 className="font-medium mb-3">Nostr-Powered Payment Benefits</h4>
+                  <ul className="space-y-3">
+                    <li className="flex items-start">
+                      <div className="mt-1 mr-3 p-1 bg-[#22C55E]/20 rounded-full">
+                        <Check size={12} className="text-[#22C55E]" />
+                      </div>
+                      <div>
+                        <span className="font-medium">Decentralized</span>
+                        <p className="text-sm text-[#E2E8F0]/70">No middlemen. The payment goes directly to the gym.</p>
+                      </div>
+                    </li>
+                    <li className="flex items-start">
+                      <div className="mt-1 mr-3 p-1 bg-[#22C55E]/20 rounded-full">
+                        <Lock size={12} className="text-[#22C55E]" />
+                      </div>
+                      <div>
+                        <span className="font-medium">Privacy-first</span>
+                        <p className="text-sm text-[#E2E8F0]/70">You use your cryptographic identity — no emails or passwords needed.</p>
+                      </div>
+                    </li>
+                    <li className="flex items-start">
+                      <div className="mt-1 mr-3 p-1 bg-[#22C55E]/20 rounded-full">
+                        <Zap size={12} className="text-[#22C55E]" />
+                      </div>
+                      <div>
+                        <span className="font-medium">Fast & low fees</span>
+                        <p className="text-sm text-[#E2E8F0]/70">Payments are done instantly with the Lightning Network.</p>
+                      </div>
+                    </li>
+                    <li className="flex items-start">
+                      <div className="mt-1 mr-3 p-1 bg-[#22C55E]/20 rounded-full">
+                        <Check size={12} className="text-[#22C55E]" />
+                      </div>
+                      <div>
+                        <span className="font-medium">Proven ownership</span>
+                        <p className="text-sm text-[#E2E8F0]/70">Your booking is signed with your Nostr key.</p>
+                      </div>
+                    </li>
+                    <li className="flex items-start">
+                      <div className="mt-1 mr-3 p-1 bg-[#22C55E]/20 rounded-full">
+                        <Globe size={12} className="text-[#22C55E]" />
+                      </div>
+                      <div>
+                        <span className="font-medium">Global & open</span>
+                        <p className="text-sm text-[#E2E8F0]/70">Anyone, anywhere can participate.</p>
+                      </div>
+                    </li>
+                  </ul>
+                  <p className="text-sm text-center mt-4 text-[#E2E8F0]/70">
+                    This transaction is verified through Nostr. You own the proof.
+                  </p>
                 </div>
-                <button className="mt-3 text-sm text-center w-full py-2 border border-white/20 rounded-md hover:bg-white/5 transition-colors">
-                  Copy Invoice
-                </button>
               </div>
-              
-              <div className="bg-[#1F2937] rounded-lg p-4 border border-white/10">
-                <h4 className="font-medium mb-3">Nostr-Powered Payment Benefits</h4>
-                <ul className="space-y-3">
-                  <li className="flex items-start">
-                    <div className="mt-1 mr-3 p-1 bg-[#22C55E]/20 rounded-full">
-                      <Check size={12} className="text-[#22C55E]" />
-                    </div>
-                    <div>
-                      <span className="font-medium">Decentralized</span>
-                      <p className="text-sm text-[#E2E8F0]/70">No middlemen. The payment goes directly to the gym.</p>
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="mt-1 mr-3 p-1 bg-[#22C55E]/20 rounded-full">
-                      <Lock size={12} className="text-[#22C55E]" />
-                    </div>
-                    <div>
-                      <span className="font-medium">Privacy-first</span>
-                      <p className="text-sm text-[#E2E8F0]/70">You use your cryptographic identity — no emails or passwords needed.</p>
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="mt-1 mr-3 p-1 bg-[#22C55E]/20 rounded-full">
-                      <Zap size={12} className="text-[#22C55E]" />
-                    </div>
-                    <div>
-                      <span className="font-medium">Fast & low fees</span>
-                      <p className="text-sm text-[#E2E8F0]/70">Payments are done instantly with the Lightning Network.</p>
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="mt-1 mr-3 p-1 bg-[#22C55E]/20 rounded-full">
-                      <Check size={12} className="text-[#22C55E]" />
-                    </div>
-                    <div>
-                      <span className="font-medium">Proven ownership</span>
-                      <p className="text-sm text-[#E2E8F0]/70">Your booking is signed with your Nostr key.</p>
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="mt-1 mr-3 p-1 bg-[#22C55E]/20 rounded-full">
-                      <Globe size={12} className="text-[#22C55E]" />
-                    </div>
-                    <div>
-                      <span className="font-medium">Global & open</span>
-                      <p className="text-sm text-[#E2E8F0]/70">Anyone, anywhere can participate.</p>
-                    </div>
-                  </li>
-                </ul>
-                <p className="text-sm text-center mt-4 text-[#E2E8F0]/70">
-                  This transaction is verified through Nostr. You own the proof.
-                </p>
-              </div>
-              
-              <div className="flex gap-3 mt-6">
-                <button 
-                  className="flex-1 py-2 bg-transparent border border-white/20 rounded-md text-[#E2E8F0] hover:bg-white/5 transition-colors"
-                  onClick={() => setShowMembershipDialog(false)}
-                >
-                  Cancel
-                </button>
-                <button 
-                  className="flex-1 py-2 bg-[#22C55E] rounded-md text-white hover:bg-[#22C55E]/90 transition-colors"
-                >
-                  Confirm and Pay
-                </button>
-              </div>
+            </ScrollArea>
+            
+            <div className="flex gap-3 mt-6">
+              <button 
+                className="flex-1 py-2 bg-transparent border border-white/20 rounded-md text-[#E2E8F0] hover:bg-white/5 transition-colors"
+                onClick={() => setShowMembershipDialog(false)}
+              >
+                Cancel
+              </button>
+              <button 
+                className="flex-1 py-2 bg-[#22C55E] rounded-md text-white hover:bg-[#22C55E]/90 transition-colors"
+              >
+                Confirm and Pay
+              </button>
             </div>
           </SheetContent>
         </Sheet>
