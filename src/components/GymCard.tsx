@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Star, MapPin, Lightning } from 'lucide-react';
+import { Star, MapPin, Zap } from 'lucide-react';
 
 interface GymCardProps {
   name: string;
@@ -36,7 +36,7 @@ const GymCard = ({ name, image, rating, location, amenities, distance, acceptsLi
               )}
               {acceptsLightning && (
                 <div className="bg-gymstr-orange/90 text-white p-1 rounded-full">
-                  <Lightning size={14} className="fill-current" />
+                  <Zap size={14} className="fill-current" />
                 </div>
               )}
             </div>

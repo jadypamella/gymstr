@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
@@ -10,7 +9,7 @@ import {
   Compass, 
   CalendarCheck, 
   Wallet, 
-  Lightning
+  Zap
 } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import GymCard from '@/components/GymCard';
@@ -149,7 +148,7 @@ const Dashboard = () => {
               </div>
             </div>
             
-            <ScrollArea className="w-full" orientation="horizontal">
+            <ScrollArea className="w-full">
               <div className="flex space-x-4 pb-4 pt-2 px-1">
                 {nearbyGyms.map((gym) => (
                   <div key={gym.id} className="min-w-[280px] w-[280px]">
