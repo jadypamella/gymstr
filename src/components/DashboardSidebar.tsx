@@ -80,8 +80,8 @@ export function DashboardSidebar() {
                 <AvatarImage src={user.avatarUrl} alt={user.name} />
                 <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
               </Avatar>
-              <div className="absolute -bottom-1 -right-1 bg-[#22C55E] rounded-full p-0.5">
-                <CheckCircle className="w-3 h-3 text-white" />
+              <div className="absolute -bottom-2 -right-2 bg-[#22C55E] rounded-full p-1.5 border-2 border-[#1E293B]">
+                <CheckCircle className="w-4 h-4 text-white" />
               </div>
             </div>
             <div>
