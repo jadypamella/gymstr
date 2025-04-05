@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
@@ -5,7 +6,6 @@ import {
   Search, 
   Filter, 
   Home, 
-  Wallet, 
   User,
   LogOut, 
   Star,
@@ -35,6 +35,7 @@ const Dashboard = () => {
     name: "Alex Johnson",
     location: "São Paulo, Brazil",
     membershipActive: true,
+    activeGym: "PowerFit Gym", // Added active gym information
     lastCheckIn: "Today, 8:30am",
     avatarUrl: "/lovable-uploads/35320248-e39b-4528-ac5c-40dce0880d8b.png"
   };
@@ -224,7 +225,6 @@ const Dashboard = () => {
           <div className="hidden md:flex items-center space-x-6">
             <a href="/" className="font-medium text-[#E2E8F0] hover:text-white transition-colors">Home</a>
             <a href="/dashboard" className="font-medium text-gymstr-orange hover:text-gymstr-orange/80 transition-colors">Dashboard</a>
-            <a href="#wallet" className="font-medium text-[#E2E8F0] hover:text-white transition-colors">Wallet</a>
             <a href="/profile" className="font-medium text-[#E2E8F0] hover:text-white transition-colors">Profile</a>
             <button className="font-medium text-[#E2E8F0] hover:text-white transition-colors flex items-center gap-1">
               <LogOut size={18} /> Log out
@@ -245,9 +245,6 @@ const Dashboard = () => {
                   </a>
                   <a href="/dashboard" className="px-3 py-2 bg-white/10 rounded-md flex items-center gap-2 text-gymstr-orange">
                     <Home size={16} /> Dashboard
-                  </a>
-                  <a href="#wallet" className="px-3 py-2 hover:bg-white/10 rounded-md flex items-center gap-2">
-                    <Wallet size={16} /> Wallet
                   </a>
                   <a href="/profile" className="px-3 py-2 hover:bg-white/10 rounded-md flex items-center gap-2">
                     <User size={16} /> Profile
@@ -290,8 +287,14 @@ const Dashboard = () => {
                 </div>
               </div>
               <div className="flex flex-col items-start md:items-end">
-                <div className="bg-[#22C55E]/20 text-[#22C55E] px-3 py-1 rounded-full text-sm font-medium">
-                  {user.membershipActive ? "Active Membership" : "No Active Membership"}
+                <div className="bg-[#22C55E]/20 text-[#22C55E] px-3 py-1 rounded-full text-sm font-medium flex items-center gap-1">
+                  {user.membershipActive ? (
+                    <>
+                      <CheckCircle className="w-3 h-3" /> Active Membership: {user.activeGym}
+                    </>
+                  ) : (
+                    "No Active Membership"
+                  )}
                 </div>
                 <p className="text-sm text-[#E2E8F0]/70 mt-1">Last check-in: {user.lastCheckIn}</p>
               </div>
