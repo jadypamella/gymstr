@@ -4,8 +4,9 @@ import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { CalendarDays, MapPin, Award, Dumbbell, BarChart2, Clock, CheckCircle } from 'lucide-react';
+import { CalendarDays, MapPin, Award, Dumbbell, BarChart2, Clock, CheckCircle, CreditCard, LogOut } from 'lucide-react';
 import Footer from '@/components/Footer';
+import { Button } from '@/components/ui/button';
 
 const Profile = () => {
   // Mock user data - in a real app this would come from an API or context
@@ -13,7 +14,7 @@ const Profile = () => {
     name: "Alex Johnson",
     location: "São Paulo, Brazil",
     memberSince: "January 2024",
-    image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?auto=format&fit=crop&w=150&h=150",
+    image: "/lovable-uploads/a9d713a6-e3a0-4bdb-95b9-414ba01b8439.png",
     bio: "Fitness enthusiast with a passion for weightlifting and functional training. Always looking for new gyms to try out while traveling.",
     stats: {
       workouts: 137,
@@ -33,9 +34,15 @@ const Profile = () => {
   ];
 
   const membershipHistory = [
-    { gym: "PowerFit Gym", type: "Monthly", status: "Active", startDate: "March 1, 2025", endDate: "April 30, 2025" },
-    { gym: "CrossTrain Center", type: "Drop-in", status: "Completed", startDate: "February 14, 2025", endDate: "February 14, 2025" },
-    { gym: "Yoga Harmony", type: "Weekly", status: "Expired", startDate: "January 10, 2025", endDate: "January 31, 2025" },
+    { gym: "PowerFit Gym", type: "Monthly", status: "Active", startDate: "March 1, 2025", endDate: "April 30, 2025", price: "$50.00" },
+    { gym: "CrossTrain Center", type: "Drop-in", status: "Completed", startDate: "February 14, 2025", endDate: "February 14, 2025", price: "$15.00" },
+    { gym: "Yoga Harmony", type: "Weekly", status: "Expired", startDate: "January 10, 2025", endDate: "January 31, 2025", price: "$25.00" },
+  ];
+  
+  const paymentHistory = [
+    { date: "March 1, 2025", description: "PowerFit Gym - Monthly Membership", amount: "$50.00", status: "Paid", method: "Credit Card (*1234)" },
+    { date: "February 14, 2025", description: "CrossTrain Center - Day Pass", amount: "$15.00", status: "Paid", method: "Credit Card (*1234)" },
+    { date: "January 10, 2025", description: "Yoga Harmony - Weekly Membership", amount: "$25.00", status: "Paid", method: "Credit Card (*5678)" },
   ];
 
   const achievements = [
@@ -47,10 +54,10 @@ const Profile = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-gymstr-navy text-gymstr-beige">
-      {/* Header/Navigation Bar - similar to Dashboard */}
+      {/* Header/Navigation Bar */}
       <header className="sticky top-0 z-30 bg-[#0F172A]/90 backdrop-blur-md border-b border-white/10 px-4 py-4">
         <div className="container mx-auto flex items-center justify-between">
-          <a href="/" className="flex items-center">
+          <a href="/dashboard" className="flex items-center">
             <img 
               src="/lovable-uploads/05cc5987-1dba-47d1-b472-86707d23fd9d.png" 
               alt="Gymstr" 
@@ -59,13 +66,11 @@ const Profile = () => {
           </a>
           
           <div className="hidden md:flex items-center space-x-6">
-            <a href="/" className="font-medium text-[#E2E8F0] hover:text-white transition-colors">Home</a>
             <a href="/dashboard" className="font-medium text-[#E2E8F0] hover:text-white transition-colors">Dashboard</a>
-            <a href="#wallet" className="font-medium text-[#E2E8F0] hover:text-white transition-colors">Wallet</a>
             <a href="/profile" className="font-medium text-gymstr-orange hover:text-gymstr-orange/80 transition-colors">Profile</a>
-            <button className="font-medium text-[#E2E8F0] hover:text-white transition-colors flex items-center gap-1">
-              Log out
-            </button>
+            <Button variant="outline" size="sm" className="font-medium flex items-center gap-1">
+              <LogOut size={18} /> Log out
+            </Button>
           </div>
         </div>
       </header>
@@ -136,7 +141,7 @@ const Profile = () => {
         </div>
         
         {/* Tabs for different sections */}
-        <Tabs defaultValue="workouts" className="space-y-6">
+        <Tabs defaultValue="memberships" className="space-y-6">
           <TabsList className="bg-[#1E293B] border border-white/10">
             <TabsTrigger value="workouts" className="data-[state=active]:bg-gymstr-orange data-[state=active]:text-white">Workout History</TabsTrigger>
             <TabsTrigger value="memberships" className="data-[state=active]:bg-gymstr-orange data-[state=active]:text-white">Memberships</TabsTrigger>
@@ -169,35 +174,123 @@ const Profile = () => {
             ))}
           </TabsContent>
           
-          <TabsContent value="memberships" className="space-y-4">
-            <h2 className="text-xl font-semibold mb-4">Membership History</h2>
-            {membershipHistory.map((membership, index) => (
-              <Card key={index} className="bg-[#1E293B] border-white/10">
+          <TabsContent value="memberships" className="space-y-8">
+            {/* Active Memberships Section */}
+            <div className="space-y-4">
+              <h2 className="text-xl font-semibold mb-4">Active Membership</h2>
+              <Card className="bg-[#1E293B] border-white/10">
                 <CardContent className="p-4">
-                  <div className="flex flex-col md:flex-row justify-between md:items-center gap-2">
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <div className="font-medium">{membership.gym}</div>
-                        <Badge 
-                          className={
-                            membership.status === 'Active' ? "bg-[#22C55E]/20 text-[#22C55E]" :
-                            membership.status === 'Expired' ? "bg-red-500/20 text-red-500" : 
-                            "bg-blue-500/20 text-blue-500"
-                          }
-                        >
-                          {membership.status}
-                        </Badge>
+                  <div className="flex flex-col md:flex-row justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-2">
+                        <h3 className="text-lg font-semibold">PowerFit Gym</h3>
+                        <Badge className="bg-[#22C55E]/20 text-[#22C55E]">Active</Badge>
                       </div>
-                      <div className="text-sm text-gymstr-beige/70">{membership.type} Membership</div>
+                      <p className="text-gymstr-beige/70">Monthly Membership</p>
+                      <div className="mt-2 flex items-center gap-1 text-sm text-gymstr-beige/70">
+                        <CalendarDays size={14} />
+                        <span>March 1, 2025 - April 30, 2025</span>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2 text-sm text-gymstr-beige/70">
-                      <CalendarDays size={14} className="mr-1" />
-                      {`${membership.startDate} - ${membership.endDate}`}
+                    
+                    <div className="bg-[#111827] p-4 rounded-lg text-center md:w-40">
+                      <div className="text-xs text-gymstr-beige/70 mb-1">Monthly Price</div>
+                      <div className="text-xl font-bold text-white">$50.00</div>
+                      <div className="mt-2 text-xs text-[#22C55E]">Paid</div>
                     </div>
+                  </div>
+
+                  <div className="mt-4 border-t border-white/10 pt-4">
+                    <h4 className="font-medium mb-2">Membership Benefits</h4>
+                    <ul className="space-y-1 text-sm text-gymstr-beige/70">
+                      <li className="flex items-start gap-2">
+                        <CheckCircle size={16} className="text-[#22C55E] mt-0.5 shrink-0" />
+                        <span>24/7 gym access</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle size={16} className="text-[#22C55E] mt-0.5 shrink-0" />
+                        <span>Access to all equipment and facilities</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle size={16} className="text-[#22C55E] mt-0.5 shrink-0" />
+                        <span>2 free training sessions per month</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle size={16} className="text-[#22C55E] mt-0.5 shrink-0" />
+                        <span>Discounts on supplements and gym merchandise</span>
+                      </li>
+                    </ul>
                   </div>
                 </CardContent>
               </Card>
-            ))}
+            </div>
+
+            {/* Membership History Section */}
+            <div className="space-y-4">
+              <h2 className="text-xl font-semibold mb-4">Membership History</h2>
+              {membershipHistory.map((membership, index) => (
+                <Card key={index} className="bg-[#1E293B] border-white/10">
+                  <CardContent className="p-4">
+                    <div className="flex flex-col md:flex-row justify-between md:items-center gap-2">
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <div className="font-medium">{membership.gym}</div>
+                          <Badge 
+                            className={
+                              membership.status === 'Active' ? "bg-[#22C55E]/20 text-[#22C55E]" :
+                              membership.status === 'Expired' ? "bg-red-500/20 text-red-500" : 
+                              "bg-blue-500/20 text-blue-500"
+                            }
+                          >
+                            {membership.status}
+                          </Badge>
+                        </div>
+                        <div className="text-sm text-gymstr-beige/70">{membership.type} Membership</div>
+                      </div>
+                      <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
+                        <div className="flex items-center gap-1 text-sm text-gymstr-beige/70">
+                          <CalendarDays size={14} className="mr-1" />
+                          {`${membership.startDate} - ${membership.endDate}`}
+                        </div>
+                        <div className="font-semibold">{membership.price}</div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            {/* Payment History Section */}
+            <div className="space-y-4">
+              <h2 className="text-xl font-semibold mb-4">Payment History</h2>
+              {paymentHistory.map((payment, index) => (
+                <Card key={index} className="bg-[#1E293B] border-white/10">
+                  <CardContent className="p-4">
+                    <div className="flex flex-col md:flex-row justify-between md:items-center gap-2">
+                      <div>
+                        <div className="font-medium">{payment.description}</div>
+                        <div className="text-sm text-gymstr-beige/70 flex items-center gap-1">
+                          <CreditCard size={14} />
+                          <span>{payment.method}</span>
+                        </div>
+                      </div>
+                      <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
+                        <div className="flex items-center gap-1 text-sm text-gymstr-beige/70">
+                          <CalendarDays size={14} className="mr-1" />
+                          {payment.date}
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Badge className="bg-[#22C55E]/20 text-[#22C55E]">
+                            {payment.status}
+                          </Badge>
+                          <span className="font-semibold">{payment.amount}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </TabsContent>
           
           <TabsContent value="achievements" className="space-y-4">
