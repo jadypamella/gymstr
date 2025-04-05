@@ -1,7 +1,7 @@
 
 import React from 'react';
 import Button from './Button';
-import { MapPin, ShieldCheck, Wallet } from 'lucide-react';
+import { MapPin, ShieldCheck, Wallet, Smartphone } from 'lucide-react';
 
 const AppPreview = () => {
   const features = [
@@ -140,7 +140,7 @@ const AppPreview = () => {
             <div className="space-y-6">
               {features.map((feature, index) => (
                 <div key={index} className="flex gap-4">
-                  <div className="mt-1 bg-gymstr-orange/10 p-2 rounded-lg">
+                  <div className="mt-1">
                     {feature.icon}
                   </div>
                   <div>
