@@ -22,6 +22,7 @@ import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -29,15 +30,14 @@ const Dashboard = () => {
   const [showMembershipDialog, setShowMembershipDialog] = useState(false);
   const [showGymDetails, setShowGymDetails] = useState(false);
   
-  // Mock data for the user
   const user = {
     name: "Alex Johnson",
     location: "São Paulo, Brazil",
     membershipActive: true,
-    lastCheckIn: "Today, 8:30am"
+    lastCheckIn: "Today, 8:30am",
+    avatarUrl: "/lovable-uploads/35320248-e39b-4528-ac5c-40dce0880d8b.png"
   };
   
-  // Mock data for gyms - in a real app this would come from an API
   const nearbyGyms = [
     {
       id: 1,
@@ -104,7 +104,7 @@ const Dashboard = () => {
       ]
     }
   ];
-  
+
   const allGyms = [
     {
       id: 5,
@@ -210,7 +210,6 @@ const Dashboard = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-[#0F172A] text-[#E2E8F0]">
-      {/* Header/Navigation Bar */}
       <header className="sticky top-0 z-30 bg-[#0F172A]/90 backdrop-blur-md border-b border-white/10 px-4 py-4">
         <div className="container mx-auto flex items-center justify-between">
           <a href="/" className="flex items-center">
@@ -262,17 +261,27 @@ const Dashboard = () => {
         </div>
       </header>
 
-      {/* Main Content */}
       <main className="flex-1 overflow-auto">
         <div className="container mx-auto px-4 py-6 space-y-10">
-          {/* User information section */}
           <section className="bg-[#1E293B] rounded-lg p-6 border border-white/10">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-              <div>
-                <h1 className="text-2xl font-bold">Welcome, {user.name}</h1>
-                <p className="text-[#E2E8F0]/70 flex items-center gap-1">
-                  <MapPin size={16} /> {user.location}
-                </p>
+              <div className="flex items-center space-x-4">
+                <Avatar className="h-16 w-16">
+                  <AvatarImage 
+                    src={user.avatarUrl} 
+                    alt={user.name} 
+                    className="object-cover"
+                  />
+                  <AvatarFallback>
+                    <User className="h-8 w-8" />
+                  </AvatarFallback>
+                </Avatar>
+                <div>
+                  <h1 className="text-2xl font-bold">{user.name}</h1>
+                  <p className="text-[#E2E8F0]/70 flex items-center gap-1">
+                    <MapPin size={16} /> {user.location}
+                  </p>
+                </div>
               </div>
               <div className="flex flex-col items-start md:items-end">
                 <div className="bg-[#22C55E]/20 text-[#22C55E] px-3 py-1 rounded-full text-sm font-medium">
@@ -283,11 +292,9 @@ const Dashboard = () => {
             </div>
           </section>
 
-          {/* Map and Nearby Gyms Section */}
           <section>
             <h2 className="text-2xl font-bold mb-6">Gyms Near You</h2>
             
-            {/* Map Placeholder - In a real app, this would be an interactive map */}
             <div className="relative w-full h-[400px] mb-6 rounded-xl overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/30 pointer-events-none z-10"></div>
               <iframe 
@@ -300,7 +307,6 @@ const Dashboard = () => {
                 referrerPolicy="no-referrer-when-downgrade"
               ></iframe>
               
-              {/* Map Pins - These would be dynamic in a real app */}
               {nearbyGyms.map((gym) => (
                 <Popover key={gym.id}>
                   <PopoverTrigger asChild>
@@ -350,7 +356,6 @@ const Dashboard = () => {
               ))}
             </div>
             
-            {/* Nearby Gyms List */}
             <h3 className="text-xl font-medium mb-4">Top Picks Nearby</h3>
             <ScrollArea className="w-full">
               <div className="flex space-x-4 pb-4 pt-2 px-1">
@@ -364,7 +369,7 @@ const Dashboard = () => {
                           className="w-full h-full object-cover"
                         />
                         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black/70 to-transparent"></div>
-                        <div className="absolute bottom-3 left-3 right-3">
+                        <div className="absolute top-3 right-3">
                           <div className="flex justify-between">
                             <div className="flex items-center">
                               <Star className="text-yellow-500 fill-yellow-500 mr-1" size={16} />
@@ -415,7 +420,6 @@ const Dashboard = () => {
             </ScrollArea>
           </section>
 
-          {/* Explore All Gyms Section */}
           <section>
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold">Explore All Gyms</h2>
@@ -469,7 +473,7 @@ const Dashboard = () => {
                       {gym.amenities.map((amenity, index) => (
                         <span 
                           key={index} 
-                          className="text-xs px-2 py-0.5 rounded-full bg-white/10 text-[#E2E8F0]/80"
+                          className="text-sm px-2 py-0.5 rounded-full bg-white/10 text-[#E2E8F0]/80"
                         >
                           {amenity}
                         </span>
@@ -498,10 +502,8 @@ const Dashboard = () => {
         </div>
       </main>
 
-      {/* Footer */}
       <Footer />
 
-      {/* Gym Details Dialog */}
       {selectedGym && (
         <Dialog open={showGymDetails} onOpenChange={setShowGymDetails}>
           <DialogContent className="bg-[#1E293B] text-[#E2E8F0] border-white/10 max-w-3xl">
@@ -514,7 +516,6 @@ const Dashboard = () => {
               </DialogDescription>
             </DialogHeader>
             
-            {/* Image Gallery */}
             <div className="relative aspect-video rounded-lg overflow-hidden">
               <img 
                 src={selectedGym.gallery[0]} 
@@ -534,7 +535,6 @@ const Dashboard = () => {
               </div>
             </div>
             
-            {/* Rating and Info */}
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <Star className="text-yellow-500 fill-yellow-500 mr-1" size={18} />
@@ -549,10 +549,8 @@ const Dashboard = () => {
               )}
             </div>
             
-            {/* Description */}
             <p className="text-[#E2E8F0]/90">{selectedGym.description}</p>
             
-            {/* Amenities */}
             <div>
               <h4 className="font-medium mb-2">Amenities</h4>
               <div className="flex flex-wrap gap-2">
@@ -589,7 +587,6 @@ const Dashboard = () => {
         </Dialog>
       )}
 
-      {/* Membership Dialog */}
       {selectedGym && (
         <Sheet open={showMembershipDialog} onOpenChange={setShowMembershipDialog}>
           <SheetContent className="sm:max-w-md bg-[#1E293B] text-[#E2E8F0] border-l-white/10">
@@ -613,7 +610,6 @@ const Dashboard = () => {
                 </div>
                 
                 <div className="rounded-lg bg-white p-4 flex justify-center">
-                  {/* This would be a real Lightning QR code in production */}
                   <div className="w-36 h-36 bg-black flex items-center justify-center">
                     <Zap size={48} className="text-white" />
                   </div>
@@ -623,7 +619,6 @@ const Dashboard = () => {
                 </button>
               </div>
               
-              {/* Benefits Section */}
               <div className="bg-[#1F2937] rounded-lg p-4 border border-white/10">
                 <h4 className="font-medium mb-3">Nostr-Powered Payment Benefits</h4>
                 <ul className="space-y-3">
