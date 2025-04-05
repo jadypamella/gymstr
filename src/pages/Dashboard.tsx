@@ -13,7 +13,8 @@ import {
   Check,
   Globe,
   Lock,
-  Zap
+  Zap,
+  CheckCircle
 } from 'lucide-react';
 import Footer from '@/components/Footer';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -266,16 +267,21 @@ const Dashboard = () => {
           <section className="bg-[#1E293B] rounded-lg p-6 border border-white/10">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
               <div className="flex items-center space-x-4">
-                <Avatar className="h-16 w-16">
-                  <AvatarImage 
-                    src={user.avatarUrl} 
-                    alt={user.name} 
-                    className="object-cover"
-                  />
-                  <AvatarFallback>
-                    <User className="h-8 w-8" />
-                  </AvatarFallback>
-                </Avatar>
+                <div className="relative">
+                  <Avatar className="h-16 w-16 border-4 border-gymstr-orange">
+                    <AvatarImage 
+                      src={user.avatarUrl} 
+                      alt={user.name} 
+                      className="object-cover"
+                    />
+                    <AvatarFallback>
+                      <User className="h-8 w-8" />
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="absolute -bottom-1 -right-1 bg-[#22C55E] rounded-full p-1">
+                    <CheckCircle className="w-4 h-4 text-white" />
+                  </div>
+                </div>
                 <div>
                   <h1 className="text-2xl font-bold">{user.name}</h1>
                   <p className="text-[#E2E8F0]/70 flex items-center gap-1">
