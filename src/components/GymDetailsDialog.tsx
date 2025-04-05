@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { 
   Dialog, 
   DialogContent, 
@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Star, MapPin, Zap } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export interface GymDetailsProps {
   id?: number;
@@ -35,6 +36,28 @@ export function GymDetailsDialog({ gym, open, onOpenChange, onJoin }: GymDetails
   if (!gym) return null;
 
   const galleryImages = gym.gallery || [gym.image];
+  const [selectedMembership, setSelectedMembership] = useState('monthly');
+  
+  const membershipOptions = {
+    monthly: {
+      name: "Monthly Membership",
+      price: "$29.99",
+      sats: "83,000",
+      btc: "0.00083000"
+    },
+    annual: {
+      name: "Annual Membership",
+      price: "$249.99",
+      sats: "695,000",
+      btc: "0.00695000"
+    },
+    daily: {
+      name: "Day Pass",
+      price: "$9.99",
+      sats: "27,000",
+      btc: "0.00027000"
+    }
+  };
   
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
