@@ -6,7 +6,6 @@ import HowItWorks from '@/components/HowItWorks';
 import PartnerSection from '@/components/PartnerSection';
 import AppPreview from '@/components/AppPreview';
 import NostrSection from '@/components/NostrSection';
-import PricingSection from '@/components/PricingSection';
 import Footer from '@/components/Footer';
 
 const Index = () => {
@@ -18,7 +17,6 @@ const Index = () => {
       <PartnerSection />
       <AppPreview />
       <NostrSection />
-      <PricingSection />
       <Footer />
     </div>
   );

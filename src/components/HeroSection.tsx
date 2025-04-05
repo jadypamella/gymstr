@@ -23,7 +23,7 @@ const HeroSection = () => {
             </p>
             <div className="flex flex-wrap gap-4 pt-4">
               <Button size="lg">
-                Start Free Trial
+                Find Your Gym
               </Button>
             </div>
             <p className="text-gymstr-beige/60 text-sm">
