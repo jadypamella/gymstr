@@ -2,6 +2,13 @@
 import React from 'react';
 import { Star, MapPin, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import {
+  HoverCard,
+  HoverCardTrigger,
+  HoverCardContent
+} from '@/components/ui/hover-card';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Label } from '@/components/ui/label';
 
 interface GymCardProps {
   name: string;
@@ -26,6 +33,8 @@ const GymCard = ({
   onViewDetails,
   onStartMembership 
 }: GymCardProps) => {
+  const [selectedMembershipType, setSelectedMembershipType] = React.useState('monthly');
+
   return (
     <div className="glass rounded-xl overflow-hidden border border-gymstr-beige/10 hover:border-gymstr-orange/30 transition-all duration-300 hover-scale group">
       <div className="aspect-[4/3] relative overflow-hidden">
@@ -74,18 +83,61 @@ const GymCard = ({
         </div>
         <div className="mt-4 flex gap-2">
           <Button 
-            variant="outline" 
-            className="w-1/2" 
+            variant="outline"
+            className="w-1/2 bg-transparent hover:bg-gymstr-beige/10" 
             onClick={onViewDetails}
           >
             View Details
           </Button>
-          <Button 
-            className="w-1/2 bg-[#22C55E] hover:bg-[#22C55E]/90 text-white"
-            onClick={onStartMembership}
-          >
-            Start Membership
-          </Button>
+          <HoverCard>
+            <HoverCardTrigger asChild>
+              <Button 
+                className="w-1/2 bg-[#22C55E] hover:bg-[#22C55E]/80 text-white transition-colors"
+                onClick={onStartMembership}
+              >
+                Start Membership
+              </Button>
+            </HoverCardTrigger>
+            <HoverCardContent className="w-80 bg-[#1A2235] text-gymstr-beige border-white/10">
+              <div className="space-y-4">
+                <h4 className="font-medium">Choose a membership plan</h4>
+                <RadioGroup 
+                  value={selectedMembershipType}
+                  onValueChange={setSelectedMembershipType}
+                  className="space-y-3"
+                >
+                  <div className="flex items-center justify-between space-x-2 p-2 rounded hover:bg-gymstr-beige/5">
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="monthly" id="monthly" className="text-gymstr-orange" />
+                      <Label htmlFor="monthly">Monthly Membership</Label>
+                    </div>
+                    <span className="font-medium">$50/mo</span>
+                  </div>
+                  <div className="flex items-center justify-between space-x-2 p-2 rounded hover:bg-gymstr-beige/5">
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="annual" id="annual" className="text-gymstr-orange" />
+                      <Label htmlFor="annual">Annual Membership</Label>
+                    </div>
+                    <span className="font-medium">$480/yr</span>
+                  </div>
+                  <div className="flex items-center justify-between space-x-2 p-2 rounded hover:bg-gymstr-beige/5">
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="daypass" id="daypass" className="text-gymstr-orange" />
+                      <Label htmlFor="daypass">Day Pass</Label>
+                    </div>
+                    <span className="font-medium">$15</span>
+                  </div>
+                </RadioGroup>
+                <div className="flex items-center gap-2 p-3 bg-gymstr-navy/50 rounded border border-gymstr-orange/30">
+                  <Zap size={20} className="text-gymstr-orange fill-gymstr-orange/30" />
+                  <div className="text-sm">Pay with Nostr Protocol</div>
+                </div>
+                <Button className="w-full bg-[#22C55E] hover:bg-[#22C55E]/90 text-white">
+                  Continue with Nostr
+                </Button>
+              </div>
+            </HoverCardContent>
+          </HoverCard>
         </div>
       </div>
     </div>

@@ -2,59 +2,38 @@
 import React from 'react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { CalendarDays, MapPin, Award, Dumbbell, BarChart2, Clock, CheckCircle, CreditCard, LogOut } from 'lucide-react';
-import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
+import { Dumbbell, MapPin, Calendar, Trophy, Users, Settings, LogOut } from 'lucide-react';
+import Footer from '@/components/Footer';
 
 const Profile = () => {
-  // Mock user data - in a real app this would come from an API or context
+  // Sample user data
   const user = {
     name: "Alex Johnson",
     location: "São Paulo, Brazil",
     memberSince: "January 2024",
-    image: "/lovable-uploads/10306ff1-f078-494c-b9ae-0dd4bbe40e49.png", // Updated user image
+    image: "/lovable-uploads/c7611c1a-24d3-4994-971a-b8d2a8cf74e5.png",
     bio: "Fitness enthusiast with a passion for weightlifting and functional training. Always looking for new gyms to try out while traveling.",
     stats: {
       workouts: 137,
+      streak: 14,
       gymsVisited: 12,
-      achievements: 8,
-      streak: 14
-    }
+      achievements: 8
+    },
+    recentWorkouts: [
+      { date: "2024-04-03", type: "Strength", duration: "45 min", gym: "PowerFit Gym" },
+      { date: "2024-04-01", type: "Cardio", duration: "30 min", gym: "FlexZone" },
+      { date: "2024-03-29", type: "Yoga", duration: "60 min", gym: "Yoga Harmony" }
+    ],
+    achievements: [
+      { name: "Early Bird", description: "Complete 5 workouts before 8 AM", date: "2024-02-15", icon: "🌅" },
+      { name: "Gym Explorer", description: "Visit 10 different gyms", date: "2024-03-10", icon: "🧭" },
+      { name: "Consistency King", description: "Work out 3 times a week for a month", date: "2024-03-28", icon: "👑" }
+    ]
   };
-
-  // Mock data for history
-  const workoutHistory = [
-    { date: "April 4, 2025", gym: "PowerFit Gym", workout: "Full Body Strength", duration: "68 min" },
-    { date: "April 2, 2025", gym: "CrossTrain Center", workout: "HIIT Session", duration: "45 min" },
-    { date: "March 30, 2025", gym: "FlexZone", workout: "Upper Body", duration: "55 min" },
-    { date: "March 28, 2025", gym: "PowerFit Gym", workout: "Leg Day", duration: "62 min" },
-    { date: "March 26, 2025", gym: "Iron Temple", workout: "Core & Cardio", duration: "40 min" },
-  ];
-
-  const membershipHistory = [
-    { gym: "PowerFit Gym", type: "Monthly", status: "Active", startDate: "March 1, 2025", endDate: "April 30, 2025", price: "$50.00" },
-    { gym: "CrossTrain Center", type: "Drop-in", status: "Completed", startDate: "February 14, 2025", endDate: "February 14, 2025", price: "$15.00" },
-    { gym: "Yoga Harmony", type: "Weekly", status: "Expired", startDate: "January 10, 2025", endDate: "January 31, 2025", price: "$25.00" },
-  ];
-  
-  const paymentHistory = [
-    { date: "March 1, 2025", description: "PowerFit Gym - Monthly Membership", amount: "$50.00", status: "Paid", method: "Credit Card (*1234)" },
-    { date: "February 14, 2025", description: "CrossTrain Center - Day Pass", amount: "$15.00", status: "Paid", method: "Credit Card (*1234)" },
-    { date: "January 10, 2025", description: "Yoga Harmony - Weekly Membership", amount: "$25.00", status: "Paid", method: "Credit Card (*5678)" },
-  ];
-
-  const achievements = [
-    { name: "Early Bird", description: "Complete 5 workouts before 8am", date: "March 15, 2025", icon: "🌅" },
-    { name: "Gym Explorer", description: "Visit 10 different gyms", date: "March 5, 2025", icon: "🧭" },
-    { name: "Consistency King", description: "Maintain a 14-day streak", date: "February 28, 2025", icon: "👑" },
-    { name: "Heavy Lifter", description: "Log a personal best in weightlifting", date: "February 10, 2025", icon: "💪" },
-  ];
 
   return (
     <div className="flex flex-col min-h-screen bg-gymstr-navy text-gymstr-beige">
-      {/* Header/Navigation Bar */}
       <header className="sticky top-0 z-30 bg-[#0F172A]/90 backdrop-blur-md border-b border-white/10 px-4 py-4">
         <div className="container mx-auto flex items-center justify-between">
           <a href="/dashboard" className="flex items-center">
@@ -72,251 +51,132 @@ const Profile = () => {
               <LogOut size={18} /> Log out
             </Button>
           </div>
+
+          <Button variant="ghost" className="md:hidden p-2">
+            <Settings size={24} />
+          </Button>
         </div>
       </header>
 
-      {/* Main Content */}
-      <main className="flex-1 container mx-auto px-4 py-8">
-        {/* Profile Header Section */}
-        <div className="bg-[#1E293B] rounded-xl p-6 mb-8 border border-white/10">
+      <main className="flex-1 container mx-auto px-4 py-6">
+        <div className="bg-[#1A2235] rounded-xl p-6 mb-8">
           <div className="flex flex-col md:flex-row gap-6 items-center md:items-start">
-            {/* Avatar */}
-            <div className="relative">
-              <Avatar className="w-24 h-24 border-4 border-gymstr-orange">
+            <div className="flex flex-col items-center">
+              <Avatar className="h-24 w-24 md:h-32 md:w-32 border-2 border-gymstr-orange">
                 <AvatarImage src={user.image} alt={user.name} />
-                <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+                <AvatarFallback>{user.name.substring(0, 2)}</AvatarFallback>
               </Avatar>
-              <div className="absolute -bottom-1 -right-1 bg-[#22C55E] rounded-full p-1">
-                <CheckCircle className="w-4 h-4 text-white" />
+              <div className="mt-4 space-y-2">
+                <Button variant="outline" className="w-full">Edit Profile</Button>
+                <Button variant="ghost" className="w-full">Settings</Button>
               </div>
             </div>
             
-            {/* User info */}
             <div className="flex-1 text-center md:text-left">
-              <h1 className="text-2xl font-bold mb-1">{user.name}</h1>
-              <div className="flex flex-col md:flex-row gap-2 md:items-center mb-4">
-                <div className="flex items-center justify-center md:justify-start gap-1 text-gymstr-beige/70">
-                  <MapPin size={16} />
-                  <span>{user.location}</span>
-                </div>
-                <div className="hidden md:block text-gymstr-beige/50">•</div>
-                <div className="flex items-center justify-center md:justify-start gap-1 text-gymstr-beige/70">
-                  <CalendarDays size={16} />
-                  <span>Member since {user.memberSince}</span>
-                </div>
+              <div className="flex flex-col md:flex-row md:justify-between md:items-center">
+                <h1 className="text-2xl md:text-3xl font-bold mb-2 md:mb-0">{user.name}</h1>
+                <Badge variant="outline" className="md:self-start bg-gymstr-orange/10 text-gymstr-orange border-gymstr-orange/20 mb-2 md:mb-0">
+                  Premium Member
+                </Badge>
               </div>
-              <p className="text-gymstr-beige/80 max-w-2xl mb-4">{user.bio}</p>
               
-              <div className="flex flex-wrap justify-center md:justify-start gap-2">
-                <Badge className="bg-gymstr-orange/20 text-gymstr-orange hover:bg-gymstr-orange/30">Weightlifting</Badge>
-                <Badge className="bg-gymstr-orange/20 text-gymstr-orange hover:bg-gymstr-orange/30">Functional Training</Badge>
-                <Badge className="bg-gymstr-orange/20 text-gymstr-orange hover:bg-gymstr-orange/30">CrossFit</Badge>
+              <div className="flex items-center justify-center md:justify-start gap-2 text-gymstr-beige/70 mb-2">
+                <MapPin size={16} className="text-gymstr-beige/60" />
+                <span>{user.location}</span>
               </div>
-            </div>
-            
-            {/* User stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full md:w-auto">
-              <div className="bg-[#111827] p-4 rounded-lg text-center">
-                <Dumbbell className="mx-auto mb-2 text-gymstr-orange" size={24} />
-                <div className="text-xl font-bold">{user.stats.workouts}</div>
-                <div className="text-xs text-gymstr-beige/70">Workouts</div>
+              
+              <div className="flex items-center justify-center md:justify-start gap-2 text-gymstr-beige/70 mb-4">
+                <Calendar size={16} className="text-gymstr-beige/60" />
+                <span>Member since {user.memberSince}</span>
               </div>
-              <div className="bg-[#111827] p-4 rounded-lg text-center">
-                <MapPin className="mx-auto mb-2 text-gymstr-orange" size={24} />
-                <div className="text-xl font-bold">{user.stats.gymsVisited}</div>
-                <div className="text-xs text-gymstr-beige/70">Gyms</div>
-              </div>
-              <div className="bg-[#111827] p-4 rounded-lg text-center">
-                <Award className="mx-auto mb-2 text-gymstr-orange" size={24} />
-                <div className="text-xl font-bold">{user.stats.achievements}</div>
-                <div className="text-xs text-gymstr-beige/70">Achievements</div>
-              </div>
-              <div className="bg-[#111827] p-4 rounded-lg text-center">
-                <BarChart2 className="mx-auto mb-2 text-gymstr-orange" size={24} />
-                <div className="text-xl font-bold">{user.stats.streak}</div>
-                <div className="text-xs text-gymstr-beige/70">Day Streak</div>
+              
+              <p className="text-gymstr-beige/80 mb-6">{user.bio}</p>
+              
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <div className="bg-[#111827] p-3 rounded-lg text-center">
+                  <div className="text-xl font-bold">{user.stats.workouts}</div>
+                  <div className="text-xs text-gymstr-beige/70">Workouts</div>
+                </div>
+                <div className="bg-[#111827] p-3 rounded-lg text-center">
+                  <div className="text-xl font-bold">{user.stats.streak}</div>
+                  <div className="text-xs text-gymstr-beige/70">Day Streak</div>
+                </div>
+                <div className="bg-[#111827] p-3 rounded-lg text-center">
+                  <div className="text-xl font-bold">{user.stats.gymsVisited}</div>
+                  <div className="text-xs text-gymstr-beige/70">Gyms</div>
+                </div>
+                <div className="bg-[#111827] p-3 rounded-lg text-center">
+                  <div className="text-xl font-bold">{user.stats.achievements}</div>
+                  <div className="text-xs text-gymstr-beige/70">Achievements</div>
+                </div>
               </div>
             </div>
           </div>
         </div>
         
-        {/* Tabs for different sections */}
-        <Tabs defaultValue="memberships" className="space-y-6">
-          <TabsList className="bg-[#1E293B] border border-white/10">
-            <TabsTrigger value="workouts" className="data-[state=active]:bg-gymstr-orange data-[state=active]:text-white">Workout History</TabsTrigger>
-            <TabsTrigger value="memberships" className="data-[state=active]:bg-gymstr-orange data-[state=active]:text-white">Memberships</TabsTrigger>
-            <TabsTrigger value="achievements" className="data-[state=active]:bg-gymstr-orange data-[state=active]:text-white">Achievements</TabsTrigger>
-          </TabsList>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2">
+            <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+              <Dumbbell className="text-gymstr-orange" size={20} /> Recent Workouts
+            </h2>
+            <div className="bg-[#1A2235] rounded-xl overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-white/10">
+                      <th className="text-left p-4 text-gymstr-beige/70">Date</th>
+                      <th className="text-left p-4 text-gymstr-beige/70">Type</th>
+                      <th className="text-left p-4 text-gymstr-beige/70">Duration</th>
+                      <th className="text-left p-4 text-gymstr-beige/70">Gym</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {user.recentWorkouts.map((workout, i) => (
+                      <tr key={i} className="border-b border-white/10 hover:bg-gymstr-beige/5">
+                        <td className="p-4">{new Date(workout.date).toLocaleDateString()}</td>
+                        <td className="p-4">{workout.type}</td>
+                        <td className="p-4">{workout.duration}</td>
+                        <td className="p-4">{workout.gym}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <div className="p-4 flex justify-center">
+                <Button variant="ghost">View All Workouts</Button>
+              </div>
+            </div>
+          </div>
           
-          <TabsContent value="workouts" className="space-y-4">
-            <h2 className="text-xl font-semibold mb-4">Recent Workouts</h2>
-            {workoutHistory.map((workout, index) => (
-              <Card key={index} className="bg-[#1E293B] border-white/10">
-                <CardContent className="p-4">
-                  <div className="flex flex-col md:flex-row justify-between md:items-center gap-2">
-                    <div>
-                      <div className="font-medium">{workout.workout}</div>
-                      <div className="text-sm text-gymstr-beige/70">{workout.gym}</div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <div className="flex items-center text-sm text-gymstr-beige/70">
-                        <CalendarDays size={14} className="mr-1" />
-                        {workout.date}
-                      </div>
-                      <div className="flex items-center text-sm text-gymstr-beige/70">
-                        <Clock size={14} className="mr-1" />
-                        {workout.duration}
-                      </div>
-                    </div>
+          <div>
+            <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+              <Trophy className="text-gymstr-orange" size={20} /> Achievements
+            </h2>
+            <div className="bg-[#1A2235] rounded-xl p-4 space-y-4">
+              {user.achievements.map((achievement, i) => (
+                <div key={i} className="flex items-center p-3 border border-white/10 rounded-lg hover:border-gymstr-orange/30 transition-colors">
+                  <div className="text-3xl mr-3">{achievement.icon}</div>
+                  <div>
+                    <h3 className="font-medium">{achievement.name}</h3>
+                    <p className="text-sm text-gymstr-beige/70">{achievement.description}</p>
+                    <p className="text-xs text-gymstr-beige/50 mt-1">Earned on {new Date(achievement.date).toLocaleDateString()}</p>
                   </div>
-                </CardContent>
-              </Card>
-            ))}
-          </TabsContent>
-          
-          <TabsContent value="memberships" className="space-y-8">
-            {/* Active Memberships Section */}
-            <div className="space-y-4">
-              <h2 className="text-xl font-semibold mb-4">Active Membership</h2>
-              <Card className="bg-[#1E293B] border-white/10">
-                <CardContent className="p-4">
-                  <div className="flex flex-col md:flex-row justify-between gap-4">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-2">
-                        <h3 className="text-lg font-semibold">PowerFit Gym</h3>
-                        <Badge className="bg-[#22C55E]/20 text-[#22C55E]">Active</Badge>
-                      </div>
-                      <p className="text-gymstr-beige/70">Monthly Membership</p>
-                      <div className="mt-2 flex items-center gap-1 text-sm text-gymstr-beige/70">
-                        <CalendarDays size={14} />
-                        <span>March 1, 2025 - April 30, 2025</span>
-                      </div>
-                    </div>
-                    
-                    <div className="bg-[#111827] p-4 rounded-lg text-center md:w-40">
-                      <div className="text-xs text-gymstr-beige/70 mb-1">Monthly Price</div>
-                      <div className="text-xl font-bold text-white">$50.00</div>
-                      <div className="mt-2 text-xs text-[#22C55E]">Paid</div>
-                    </div>
-                  </div>
-
-                  <div className="mt-4 border-t border-white/10 pt-4">
-                    <h4 className="font-medium mb-2">Membership Benefits</h4>
-                    <ul className="space-y-1 text-sm text-gymstr-beige/70">
-                      <li className="flex items-start gap-2">
-                        <CheckCircle size={16} className="text-[#22C55E] mt-0.5 shrink-0" />
-                        <span>24/7 gym access</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <CheckCircle size={16} className="text-[#22C55E] mt-0.5 shrink-0" />
-                        <span>Access to all equipment and facilities</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <CheckCircle size={16} className="text-[#22C55E] mt-0.5 shrink-0" />
-                        <span>2 free training sessions per month</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <CheckCircle size={16} className="text-[#22C55E] mt-0.5 shrink-0" />
-                        <span>Discounts on supplements and gym merchandise</span>
-                      </li>
-                    </ul>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Membership History Section */}
-            <div className="space-y-4">
-              <h2 className="text-xl font-semibold mb-4">Membership History</h2>
-              {membershipHistory.map((membership, index) => (
-                <Card key={index} className="bg-[#1E293B] border-white/10">
-                  <CardContent className="p-4">
-                    <div className="flex flex-col md:flex-row justify-between md:items-center gap-2">
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <div className="font-medium">{membership.gym}</div>
-                          <Badge 
-                            className={
-                              membership.status === 'Active' ? "bg-[#22C55E]/20 text-[#22C55E]" :
-                              membership.status === 'Expired' ? "bg-red-500/20 text-red-500" : 
-                              "bg-blue-500/20 text-blue-500"
-                            }
-                          >
-                            {membership.status}
-                          </Badge>
-                        </div>
-                        <div className="text-sm text-gymstr-beige/70">{membership.type} Membership</div>
-                      </div>
-                      <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
-                        <div className="flex items-center gap-1 text-sm text-gymstr-beige/70">
-                          <CalendarDays size={14} className="mr-1" />
-                          {`${membership.startDate} - ${membership.endDate}`}
-                        </div>
-                        <div className="font-semibold">{membership.price}</div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                </div>
               ))}
+              <Button variant="ghost" className="w-full">View All Achievements</Button>
             </div>
-
-            {/* Payment History Section */}
-            <div className="space-y-4">
-              <h2 className="text-xl font-semibold mb-4">Payment History</h2>
-              {paymentHistory.map((payment, index) => (
-                <Card key={index} className="bg-[#1E293B] border-white/10">
-                  <CardContent className="p-4">
-                    <div className="flex flex-col md:flex-row justify-between md:items-center gap-2">
-                      <div>
-                        <div className="font-medium">{payment.description}</div>
-                        <div className="text-sm text-gymstr-beige/70 flex items-center gap-1">
-                          <CreditCard size={14} />
-                          <span>{payment.method}</span>
-                        </div>
-                      </div>
-                      <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
-                        <div className="flex items-center gap-1 text-sm text-gymstr-beige/70">
-                          <CalendarDays size={14} className="mr-1" />
-                          {payment.date}
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Badge className="bg-[#22C55E]/20 text-[#22C55E]">
-                            {payment.status}
-                          </Badge>
-                          <span className="font-semibold">{payment.amount}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+            
+            <h2 className="text-xl font-bold mt-8 mb-4 flex items-center gap-2">
+              <Users className="text-gymstr-orange" size={20} /> Gym Buddies
+            </h2>
+            <div className="bg-[#1A2235] rounded-xl p-6 text-center">
+              <p className="text-gymstr-beige/70 mb-4">Connect with gym buddies to motivate each other and share progress.</p>
+              <Button>Find Gym Buddies</Button>
             </div>
-          </TabsContent>
-          
-          <TabsContent value="achievements" className="space-y-4">
-            <h2 className="text-xl font-semibold mb-4">Your Achievements</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {achievements.map((achievement, index) => (
-                <Card key={index} className="bg-[#1E293B] border-white/10">
-                  <CardContent className="p-4">
-                    <div className="flex flex-col items-center text-center">
-                      <div className="text-4xl mb-3">{achievement.icon}</div>
-                      <div className="font-medium">{achievement.name}</div>
-                      <div className="text-sm text-gymstr-beige/70 mb-2">{achievement.description}</div>
-                      <div className="text-xs text-gymstr-beige/50 flex items-center">
-                        <CalendarDays size={12} className="mr-1" />
-                        Achieved on {achievement.date}
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </TabsContent>
-        </Tabs>
+          </div>
+        </div>
       </main>
-
-      {/* Footer */}
+      
       <Footer />
     </div>
   );

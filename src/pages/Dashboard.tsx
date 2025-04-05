@@ -76,7 +76,7 @@ const Dashboard = () => {
       rating: 4.8,
       location: "Downtown São Paulo",
       distance: "0.8",
-      image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=300&h=200",
+      image: "/lovable-uploads/e8254a03-16a8-46f7-9106-d7639107e343.png",
       features: ["24/7 Access", "Personal Trainers", "Sauna"],
       pricing: "From $50/month",
       popularity: "Very High",
@@ -88,7 +88,7 @@ const Dashboard = () => {
       rating: 4.6,
       location: "Pinheiros, São Paulo",
       distance: "1.2",
-      image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=300&h=200",
+      image: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=300&h=200",
       features: ["Group Classes", "CrossFit Equipment", "Nutrition Consulting"],
       pricing: "From $65/month",
       popularity: "High",
@@ -100,7 +100,7 @@ const Dashboard = () => {
       rating: 4.5,
       location: "Moema, São Paulo",
       distance: "1.5",
-      image: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=300&h=200",
+      image: "https://images.unsplash.com/photo-1579758629938-03607ccdbaba?auto=format&fit=crop&w=300&h=200",
       features: ["Premium Equipment", "Swimming Pool", "Spa"],
       pricing: "From $75/month",
       popularity: "Moderate",
@@ -112,7 +112,7 @@ const Dashboard = () => {
       rating: 4.7,
       location: "Vila Mariana, São Paulo",
       distance: "2.3",
-      image: "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=300&h=200",
+      image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=300&h=200",
       features: ["Bodybuilding Focus", "Free Weights", "Supplements Shop"],
       pricing: "From $45/month",
       popularity: "High",
@@ -124,7 +124,7 @@ const Dashboard = () => {
       rating: 4.9,
       location: "Jardins, São Paulo",
       distance: "1.7",
-      image: "https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=300&h=200",
+      image: "https://images.unsplash.com/photo-1588286840104-8957b019727f?auto=format&fit=crop&w=300&h=200",
       features: ["Hot Yoga", "Meditation Classes", "Wellness Programs"],
       pricing: "From $60/month",
       popularity: "Moderate",
@@ -136,7 +136,7 @@ const Dashboard = () => {
       rating: 4.4,
       location: "Itaim Bibi, São Paulo",
       distance: "2.8",
-      image: "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=300&h=200",
+      image: "https://images.unsplash.com/photo-1534258936925-c58bed479fcb?auto=format&fit=crop&w=300&h=200",
       features: ["Treadmill Zone", "Spin Classes", "Heart Rate Monitoring"],
       pricing: "From $55/month",
       popularity: "Moderate",
@@ -162,7 +162,7 @@ const Dashboard = () => {
   const user = {
     name: "Alex Johnson",
     location: "São Paulo, Brazil",
-    image: "/lovable-uploads/10306ff1-f078-494c-b9ae-0dd4bbe40e49.png",
+    image: "/lovable-uploads/c7611c1a-24d3-4994-971a-b8d2a8cf74e5.png",
     workouts: 137,
     gymsVisited: 12,
     achievements: 8,
@@ -338,56 +338,18 @@ const Dashboard = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredGyms.slice(0, 3).map((gym) => (
-              <Card key={gym.id} className="flex flex-col bg-[#1A2235] border-white/10 overflow-hidden h-full">
-                <img 
-                  src={gym.image} 
-                  alt={gym.name} 
-                  className="w-full h-36 object-cover"
-                />
-                <CardHeader className="pb-0">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <CardTitle className="text-lg">{gym.name}</CardTitle>
-                      <CardDescription className="text-gymstr-beige/60 flex items-center gap-1">
-                        <MapPin size={14} /> {gym.location} ({gym.distance} km)
-                      </CardDescription>
-                    </div>
-                    <div className="flex items-center gap-1 bg-gymstr-beige/10 py-1 px-2 rounded">
-                      <Star size={14} className="fill-gymstr-orange text-gymstr-orange" />
-                      <span className="text-sm font-medium">{gym.rating}</span>
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent className="py-3">
-                  <div className="flex flex-wrap gap-2">
-                    {gym.features.slice(0, 2).map((feature, i) => (
-                      <Badge key={i} variant="outline" className="bg-gymstr-beige/5">
-                        {feature}
-                      </Badge>
-                    ))}
-                    {gym.features.length > 2 && (
-                      <Badge variant="outline" className="bg-gymstr-beige/5">
-                        +{gym.features.length - 2}
-                      </Badge>
-                    )}
-                  </div>
-                </CardContent>
-                <CardFooter className="pt-0 mt-auto flex gap-2">
-                  <Button 
-                    variant="outline" 
-                    className="w-1/2" 
-                    onClick={() => openDetailsDialog(gym)}
-                  >
-                    View Details
-                  </Button>
-                  <Button 
-                    className="w-1/2 bg-[#22C55E] hover:bg-[#22C55E]/90 text-white"
-                    onClick={() => openMembershipDialog(gym)}
-                  >
-                    Start Membership
-                  </Button>
-                </CardFooter>
-              </Card>
+              <GymCard
+                key={gym.id}
+                name={gym.name}
+                image={gym.image}
+                rating={gym.rating}
+                location={gym.location}
+                amenities={gym.features}
+                distance={gym.distance}
+                acceptsLightning={true}
+                onViewDetails={() => openDetailsDialog(gym)}
+                onStartMembership={() => openMembershipDialog(gym)}
+              />
             ))}
           </div>
         </section>
@@ -422,13 +384,13 @@ const Dashboard = () => {
                   <CardFooter className="pt-0 flex gap-2">
                     <Button 
                       variant="outline" 
-                      className="w-1/2 text-sm" 
+                      className="w-1/2 text-sm bg-transparent hover:bg-gymstr-beige/10"
                       onClick={() => openDetailsDialog(gym)}
                     >
                       View Details
                     </Button>
                     <Button 
-                      className="w-1/2 text-sm bg-[#22C55E] hover:bg-[#22C55E]/90 text-white"
+                      className="w-1/2 text-sm bg-[#22C55E] hover:bg-[#22C55E]/80 text-white"
                       onClick={() => openMembershipDialog(gym)}
                     >
                       Start Membership
@@ -477,13 +439,13 @@ const Dashboard = () => {
                     <div className="flex gap-2 mt-3">
                       <Button 
                         variant="outline" 
-                        className="text-sm"
+                        className="text-sm bg-transparent hover:bg-gymstr-beige/10"
                         onClick={() => openDetailsDialog(gym)} 
                       >
                         View Details
                       </Button>
                       <Button 
-                        className="bg-[#22C55E] hover:bg-[#22C55E]/90 text-white text-sm"
+                        className="bg-[#22C55E] hover:bg-[#22C55E]/80 text-white text-sm"
                         onClick={() => openMembershipDialog(gym)}
                       >
                         Start Membership
@@ -552,8 +514,8 @@ const Dashboard = () => {
               
               <div className="flex gap-3">
                 <Button 
-                  variant="outline" 
-                  className="flex-1"
+                  variant="outline"
+                  className="flex-1 bg-transparent hover:bg-gymstr-beige/10"
                   onClick={() => {
                     setIsDetailsDialogOpen(false);
                   }}
@@ -561,7 +523,7 @@ const Dashboard = () => {
                   Close
                 </Button>
                 <Button 
-                  className="flex-1 bg-[#22C55E] hover:bg-[#22C55E]/90 text-white"
+                  className="flex-1 bg-[#22C55E] hover:bg-[#22C55E]/80 text-white"
                   onClick={() => {
                     setIsDetailsDialogOpen(false);
                     openMembershipDialog(selectedGym);
@@ -645,7 +607,7 @@ const Dashboard = () => {
                 <div className="flex items-center gap-3 p-3 bg-gymstr-navy/50 rounded-md border border-gymstr-orange/30">
                   <Zap size={24} className="text-gymstr-orange fill-gymstr-orange/30" />
                   <div>
-                    <div className="font-medium">Pay with Nostr</div>
+                    <div className="font-medium">Pay with Nostr Protocol</div>
                     <div className="text-xs text-gymstr-beige/60">Quick, secure payments via the Nostr protocol</div>
                   </div>
                 </div>
