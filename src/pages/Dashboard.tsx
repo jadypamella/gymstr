@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
@@ -226,7 +225,7 @@ const Dashboard = () => {
             <a href="/" className="font-medium text-[#E2E8F0] hover:text-white transition-colors">Home</a>
             <a href="/dashboard" className="font-medium text-gymstr-orange hover:text-gymstr-orange/80 transition-colors">Dashboard</a>
             <a href="#wallet" className="font-medium text-[#E2E8F0] hover:text-white transition-colors">Wallet</a>
-            <a href="#profile" className="font-medium text-[#E2E8F0] hover:text-white transition-colors">Profile</a>
+            <a href="/profile" className="font-medium text-[#E2E8F0] hover:text-white transition-colors">Profile</a>
             <button className="font-medium text-[#E2E8F0] hover:text-white transition-colors flex items-center gap-1">
               <LogOut size={18} /> Log out
             </button>
@@ -250,7 +249,7 @@ const Dashboard = () => {
                   <a href="#wallet" className="px-3 py-2 hover:bg-white/10 rounded-md flex items-center gap-2">
                     <Wallet size={16} /> Wallet
                   </a>
-                  <a href="#profile" className="px-3 py-2 hover:bg-white/10 rounded-md flex items-center gap-2">
+                  <a href="/profile" className="px-3 py-2 hover:bg-white/10 rounded-md flex items-center gap-2">
                     <User size={16} /> Profile
                   </a>
                   <button className="px-3 py-2 hover:bg-white/10 rounded-md flex items-center gap-2 text-left">
@@ -342,7 +341,7 @@ const Dashboard = () => {
                           className="flex-1 bg-[#22C55E] hover:bg-[#22C55E]/90 text-white"
                           onClick={() => openMembershipDialog(gym)}
                         >
-                          Start Membership
+                          Join
                         </Button>
                       </div>
                     </div>
@@ -406,7 +405,7 @@ const Dashboard = () => {
                           className="flex-1 bg-[#22C55E] hover:bg-[#22C55E]/90 text-white"
                           onClick={() => openMembershipDialog(gym)}
                         >
-                          Start Membership
+                          Join
                         </Button>
                       </CardFooter>
                     </Card>
@@ -489,7 +488,7 @@ const Dashboard = () => {
                       className="w-1/2 bg-[#22C55E] hover:bg-[#22C55E]/90 text-white"
                       onClick={() => openMembershipDialog(gym)}
                     >
-                      Start Membership
+                      Join
                     </Button>
                   </CardFooter>
                 </Card>
@@ -583,7 +582,7 @@ const Dashboard = () => {
                   openMembershipDialog(selectedGym);
                 }}
               >
-                Start Membership
+                Join
               </Button>
             </div>
           </DialogContent>
