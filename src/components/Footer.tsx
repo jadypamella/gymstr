@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <footer className="bg-gymstr-navy py-12 border-t border-white/5">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
           <div>
             <img 
               src="/lovable-uploads/05cc5987-1dba-47d1-b472-86707d23fd9d.png" 
@@ -53,24 +53,13 @@ const Footer = () => {
               <li><a href="#" className="text-gymstr-beige/70 hover:text-gymstr-orange transition-colors">Terms of Service</a></li>
             </ul>
           </div>
-          
-          <div>
-            <h3 className="font-semibold text-gymstr-beige text-lg mb-4">Powered By</h3>
-            <div className="flex items-center space-x-4">
-              <span className="text-xs font-semibold bg-gradient-to-r from-gymstr-orange to-gymstr-redOrange bg-clip-text text-transparent">Nostr Protocol</span>
-            </div>
-          </div>
         </div>
         
         <div className="border-t border-white/5 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gymstr-beige/50 text-sm mb-4 md:mb-0">
+            <p className="text-gymstr-beige/50 text-sm">
               © 2025 Gymstr. All rights reserved.
             </p>
-            <div className="flex items-center space-x-4">
-              <span className="text-xs text-gymstr-beige/50">Powered by</span>
-              <span className="text-xs font-semibold bg-gradient-to-r from-gymstr-orange to-gymstr-redOrange bg-clip-text text-transparent">Nostr Protocol</span>
-            </div>
           </div>
         </div>
       </div>
