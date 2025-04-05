@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
@@ -30,6 +31,7 @@ import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import LoginModal from '@/components/LoginModal';
+import { DashboardSidebar } from '@/components/DashboardSidebar';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -37,24 +39,6 @@ const Dashboard = () => {
   const [showMembershipDialog, setShowMembershipDialog] = useState(false);
   const [showGymDetails, setShowGymDetails] = useState(false);
   const [selectedMembership, setSelectedMembership] = useState('monthly');
-  
-  const user = {
-    name: "Alex Johnson",
-    location: "São Paulo, Brazil",
-    memberSince: "January 2024",
-    membershipActive: true,
-    activeGym: "PowerFit Gym",
-    lastCheckIn: "Today, 8:30am",
-    avatarUrl: "/lovable-uploads/35320248-e39b-4528-ac5c-40dce0880d8b.png",
-    bio: "Fitness enthusiast with a passion for weightlifting and functional training. Always looking for new gyms to try out while traveling.",
-    stats: {
-      workouts: 137,
-      gymsVisited: 12,
-      achievements: 8,
-      streak: 14
-    },
-    interests: ["Weightlifting", "Functional Training", "CrossFit"]
-  };
   
   const membershipOptions = {
     monthly: {
@@ -300,8 +284,6 @@ const Dashboard = () => {
 
       <main className="flex-1 overflow-auto">
         <div className="container mx-auto px-4 py-6 space-y-10">
-          
-
           <section>
             <h2 className="text-2xl font-bold mb-6">Gyms Near You</h2>
             
@@ -514,6 +496,7 @@ const Dashboard = () => {
 
       <Footer />
 
+      {/* Gym Details Dialog */}
       {selectedGym && (
         <Dialog open={showGymDetails} onOpenChange={setShowGymDetails}>
           <DialogContent className="bg-[#1E293B] text-[#E2E8F0] border-white/10 max-w-3xl">
@@ -534,4 +517,183 @@ const Dashboard = () => {
               />
               <div className="absolute bottom-3 right-3 flex gap-1">
                 {selectedGym.gallery.slice(1).map((image, idx) => (
-                  <div key={idx
+                  <div key={idx} className="w-12 h-12 rounded-md overflow-hidden bg-white/10">
+                    <img 
+                      src={image} 
+                      alt={`${selectedGym.name} gallery ${idx + 2}`} 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            <div className="mt-4">
+              <h3 className="font-medium text-lg mb-2">About</h3>
+              <p className="text-[#E2E8F0]/80">{selectedGym.description}</p>
+              
+              <div className="flex flex-wrap gap-2 mt-4">
+                {selectedGym.amenities.map((amenity, idx) => (
+                  <Badge key={idx} variant="secondary" className="bg-white/10 hover:bg-white/20">
+                    {amenity}
+                  </Badge>
+                ))}
+              </div>
+              
+              <div className="flex justify-end mt-4 gap-2">
+                <Button 
+                  variant="outline" 
+                  className="bg-transparent text-[#E2E8F0] border-white/20"
+                  onClick={() => setShowGymDetails(false)}
+                >
+                  Close
+                </Button>
+                <Button 
+                  className="bg-[#22C55E] hover:bg-[#22C55E]/90 text-white"
+                  onClick={() => {
+                    setShowGymDetails(false);
+                    openMembershipDialog(selectedGym);
+                  }}
+                >
+                  Join This Gym
+                </Button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
+      )}
+
+      {/* Membership Dialog */}
+      {selectedGym && (
+        <Dialog open={showMembershipDialog} onOpenChange={setShowMembershipDialog}>
+          <DialogContent className="bg-[#1E293B] text-[#E2E8F0] border-white/10">
+            <DialogHeader>
+              <DialogTitle className="text-2xl">Join {selectedGym.name}</DialogTitle>
+              <DialogDescription className="text-[#E2E8F0]/70">
+                Choose your membership plan
+              </DialogDescription>
+            </DialogHeader>
+            
+            <Tabs defaultValue="monthly" value={selectedMembership} onValueChange={setSelectedMembership}>
+              <TabsList className="grid grid-cols-3 bg-white/5 mb-4">
+                <TabsTrigger value="monthly">Monthly</TabsTrigger>
+                <TabsTrigger value="annual">Annual</TabsTrigger>
+                <TabsTrigger value="daily">Day Pass</TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="monthly" className="space-y-4">
+                <div className="bg-white/5 p-4 rounded-lg">
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="font-medium text-lg">{membershipOptions.monthly.name}</h3>
+                    <div className="text-2xl font-bold text-gymstr-orange">{membershipOptions.monthly.price}</div>
+                  </div>
+                  <div className="text-sm text-[#E2E8F0]/70">Per month, cancel anytime</div>
+                  <div className="mt-4 flex items-center text-sm text-[#E2E8F0]/70">
+                    <Zap size={16} className="mr-1 text-[#F7931A] fill-[#F7931A]" />
+                    <span>Pay with Lightning: {membershipOptions.monthly.sats} sats</span>
+                  </div>
+                </div>
+                
+                <div className="space-y-3">
+                  <div className="flex items-center">
+                    <CheckCircle size={18} className="mr-2 text-[#22C55E]" />
+                    <span>Unlimited access to {selectedGym.name}</span>
+                  </div>
+                  <div className="flex items-center">
+                    <CheckCircle size={18} className="mr-2 text-[#22C55E]" />
+                    <span>Access to all basic equipment and areas</span>
+                  </div>
+                  <div className="flex items-center">
+                    <CheckCircle size={18} className="mr-2 text-[#22C55E]" />
+                    <span>Free fitness assessment</span>
+                  </div>
+                </div>
+              </TabsContent>
+              
+              <TabsContent value="annual" className="space-y-4">
+                <div className="bg-white/5 p-4 rounded-lg relative overflow-hidden">
+                  <div className="absolute top-0 right-0 bg-[#22C55E] text-white px-3 py-1 text-xs font-medium rounded-bl-lg">
+                    Best Value
+                  </div>
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="font-medium text-lg">{membershipOptions.annual.name}</h3>
+                    <div className="text-2xl font-bold text-gymstr-orange">{membershipOptions.annual.price}</div>
+                  </div>
+                  <div className="text-sm text-[#E2E8F0]/70">Save 30% vs monthly</div>
+                  <div className="mt-4 flex items-center text-sm text-[#E2E8F0]/70">
+                    <Zap size={16} className="mr-1 text-[#F7931A] fill-[#F7931A]" />
+                    <span>Pay with Lightning: {membershipOptions.annual.sats} sats</span>
+                  </div>
+                </div>
+                
+                <div className="space-y-3">
+                  <div className="flex items-center">
+                    <CheckCircle size={18} className="mr-2 text-[#22C55E]" />
+                    <span>Everything in Monthly plan</span>
+                  </div>
+                  <div className="flex items-center">
+                    <CheckCircle size={18} className="mr-2 text-[#22C55E]" />
+                    <span>2 free personal training sessions</span>
+                  </div>
+                  <div className="flex items-center">
+                    <CheckCircle size={18} className="mr-2 text-[#22C55E]" />
+                    <span>Access to premium classes</span>
+                  </div>
+                  <div className="flex items-center">
+                    <CheckCircle size={18} className="mr-2 text-[#22C55E]" />
+                    <span>Guest passes (2 per month)</span>
+                  </div>
+                </div>
+              </TabsContent>
+              
+              <TabsContent value="daily" className="space-y-4">
+                <div className="bg-white/5 p-4 rounded-lg">
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="font-medium text-lg">{membershipOptions.daily.name}</h3>
+                    <div className="text-2xl font-bold text-gymstr-orange">{membershipOptions.daily.price}</div>
+                  </div>
+                  <div className="text-sm text-[#E2E8F0]/70">Single day access</div>
+                  <div className="mt-4 flex items-center text-sm text-[#E2E8F0]/70">
+                    <Zap size={16} className="mr-1 text-[#F7931A] fill-[#F7931A]" />
+                    <span>Pay with Lightning: {membershipOptions.daily.sats} sats</span>
+                  </div>
+                </div>
+                
+                <div className="space-y-3">
+                  <div className="flex items-center">
+                    <CheckCircle size={18} className="mr-2 text-[#22C55E]" />
+                    <span>24-hour access to {selectedGym.name}</span>
+                  </div>
+                  <div className="flex items-center">
+                    <CheckCircle size={18} className="mr-2 text-[#22C55E]" />
+                    <span>Access to all basic equipment and areas</span>
+                  </div>
+                </div>
+              </TabsContent>
+            </Tabs>
+            
+            <div className="flex items-center justify-end mt-4 gap-2">
+              <Button 
+                variant="outline" 
+                className="bg-transparent text-[#E2E8F0] border-white/20"
+                onClick={() => setShowMembershipDialog(false)}
+              >
+                Cancel
+              </Button>
+              <Button className="bg-[#F7931A] hover:bg-[#F7931A]/90 text-white">
+                <Zap size={16} className="mr-2" />
+                Pay with Lightning
+              </Button>
+              <Button className="bg-[#22C55E] hover:bg-[#22C55E]/90 text-white">
+                <Check size={16} className="mr-2" />
+                Pay with Card
+              </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
+      )}
+    </div>
+  );
+};
+
+export default Dashboard;
