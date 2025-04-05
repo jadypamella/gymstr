@@ -56,6 +56,7 @@ import { Label } from "@/components/ui/label";
 import GymCard from '@/components/GymCard';
 import Footer from '@/components/Footer';
 import GymMap from '@/components/GymMap';
+import LoginModal from '@/components/LoginModal';
 
 const Dashboard = () => {
   const navigate = useNavigate();
