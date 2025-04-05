@@ -9,12 +9,6 @@ import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 
-// Set the favicon
-const favicon = document.querySelector('link[rel="icon"]');
-if (favicon) {
-  favicon.setAttribute('href', '/lovable-uploads/a9d713a6-e3a0-4bdb-95b9-414ba01b8439.png');
-}
-
 const queryClient = new QueryClient();
 
 const App = () => (

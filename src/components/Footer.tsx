@@ -60,9 +60,6 @@ const Footer = () => {
             <p className="text-gymstr-beige/50 text-sm">
               © 2025 Gymstr. All rights reserved.
             </p>
-            <p className="text-gymstr-beige/50 text-sm mt-2 md:mt-0">
-              Powered by Nostr Protocol
-            </p>
           </div>
         </div>
       </div>
