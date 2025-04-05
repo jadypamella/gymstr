@@ -3,7 +3,7 @@ import React from 'react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
-import { CalendarDays, MapPin, Award, Dumbbell, BarChart2, Clock, CheckCircle } from 'lucide-react';
+import { CalendarDays, MapPin, Award, Dumbbell, BarChart2, Clock, CheckCircle, MapPinned } from 'lucide-react';
 import Footer from '@/components/Footer';
 import Button from '@/components/Button';
 import LoginModal from '@/components/LoginModal';
@@ -28,6 +28,13 @@ const Profile = () => {
       type: "Monthly",
       startDate: "March 1, 2025",
       endDate: "April 30, 2025"
+    },
+    // Added last check-in data
+    lastCheckIn: {
+      date: "April 5, 2025", // Today's date from the context
+      time: "08:45 AM",
+      location: "PowerFit Gym",
+      workout: "Morning Strength Session"
     }
   };
 
@@ -114,11 +121,27 @@ const Profile = () => {
               </div>
               <p className="text-gymstr-beige/80 max-w-2xl mb-4">{user.bio}</p>
               
-              <div className="flex flex-wrap justify-center md:justify-start gap-2">
+              <div className="flex flex-wrap justify-center md:justify-start gap-2 mb-3">
                 <Badge className="bg-gymstr-orange/20 text-gymstr-orange hover:bg-gymstr-orange/30">Weightlifting</Badge>
                 <Badge className="bg-gymstr-orange/20 text-gymstr-orange hover:bg-gymstr-orange/30">Functional Training</Badge>
                 <Badge className="bg-gymstr-orange/20 text-gymstr-orange hover:bg-gymstr-orange/30">CrossFit</Badge>
               </div>
+
+              {/* Last Check-in Section */}
+              {user.lastCheckIn && (
+                <div className="mt-2 flex items-center justify-center md:justify-start p-2 px-3 bg-[#111827]/60 rounded-lg max-w-md">
+                  <div className="flex items-center">
+                    <MapPinned size={16} className="text-gymstr-orange mr-2" />
+                    <div>
+                      <div className="text-sm font-medium">Last Check-in: {user.lastCheckIn.location}</div>
+                      <div className="text-xs text-gymstr-beige/70 flex items-center">
+                        <CalendarDays size={12} className="mr-1" /> 
+                        {user.lastCheckIn.date} • {user.lastCheckIn.time}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
             
             {/* User stats */}
