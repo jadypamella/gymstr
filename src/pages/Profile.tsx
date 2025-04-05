@@ -48,7 +48,7 @@ const Profile = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-gymstr-navy text-gymstr-beige">
-      {/* Header/Navigation Bar - similar to Dashboard */}
+      {/* Header/Navigation Bar */}
       <header className="sticky top-0 z-30 bg-[#0F172A]/90 backdrop-blur-md border-b border-white/10 px-4 py-4">
         <div className="container mx-auto flex items-center justify-between">
           <a href="/" className="flex items-center">
@@ -63,9 +63,11 @@ const Profile = () => {
             <a href="/" className="font-medium text-[#E2E8F0] hover:text-white transition-colors">Home</a>
             <a href="/dashboard" className="font-medium text-[#E2E8F0] hover:text-white transition-colors">Dashboard</a>
             <a href="/profile" className="font-medium text-gymstr-orange hover:text-gymstr-orange/80 transition-colors">Profile</a>
-            <Button variant="outline" size="sm">
-              Log out
-            </Button>
+            <LoginModal>
+              <Button variant="outline" size="sm">
+                Log out
+              </Button>
+            </LoginModal>
           </div>
         </div>
       </header>
