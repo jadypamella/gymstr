@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Button from './Button';
 import { MapPin, ShieldCheck, Wallet, Smartphone } from 'lucide-react';
@@ -33,24 +32,20 @@ const AppPreview = () => {
         <div className="text-center mb-12">
           <h2 className="text-gradient font-bold mb-4">Power in Your Pocket</h2>
           <p className="text-gymstr-beige/70 max-w-2xl mx-auto text-lg">
-            The GYMSTR mobile app gives you everything you need for a seamless fitness experience.
+            The Gymstr mobile app gives you everything you need for a seamless fitness experience.
           </p>
         </div>
 
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
           <div className="w-full lg:w-1/2 flex justify-center">
             <div className="relative">
-              {/* Phone mockup with gradient glow */}
               <div className="absolute -inset-2 bg-gradient-to-r from-gymstr-orange to-gymstr-redOrange rounded-3xl blur-lg opacity-40 animate-pulse"></div>
               
               <div className="relative border-8 border-gymstr-navy/80 rounded-[2.5rem] overflow-hidden bg-black shadow-lg">
                 <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-40 h-6 bg-gymstr-navy/80 rounded-b-xl z-10"></div>
                 <div className="w-64 md:w-72 aspect-[9/19]">
-                  {/* App screen mockup */}
                   <div className="w-full h-full relative bg-gymstr-navy/90">
-                    {/* App UI elements */}
                     <div className="flex flex-col h-full">
-                      {/* Status bar */}
                       <div className="p-2 flex justify-between items-center">
                         <span className="text-xs text-gymstr-beige">9:41</span>
                         <div className="flex items-center space-x-1">
@@ -59,7 +54,6 @@ const AppPreview = () => {
                         </div>
                       </div>
                       
-                      {/* App content */}
                       <div className="flex-1 p-4">
                         <div className="flex justify-between items-center mb-6">
                           <div>
@@ -109,7 +103,6 @@ const AppPreview = () => {
                         </div>
                       </div>
                       
-                      {/* Bottom nav */}
                       <div className="p-2 border-t border-white/10 flex justify-around">
                         <div className="flex flex-col items-center">
                           <div className="w-5 h-5 rounded-full bg-gymstr-orange"></div>
@@ -134,7 +127,7 @@ const AppPreview = () => {
           <div className="w-full lg:w-1/2 space-y-8">
             <h3 className="text-3xl font-bold text-gymstr-beige">Everything You Need in One App</h3>
             <p className="text-gymstr-beige/70">
-              The GYMSTR app puts the power of decentralized fitness in your pocket. Find, access, and manage your gym experience with ease.
+              The Gymstr app puts the power of decentralized fitness in your pocket. Find, access, and manage your gym experience with ease.
             </p>
             
             <div className="space-y-6">
@@ -154,10 +147,7 @@ const AppPreview = () => {
             <div className="flex flex-wrap gap-4 pt-4">
               <Button>
                 <Smartphone size={18} className="mr-2" />
-                Download App
-              </Button>
-              <Button variant="outline">
-                Learn More
+                Coming Soon
               </Button>
             </div>
           </div>

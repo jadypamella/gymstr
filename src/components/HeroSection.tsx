@@ -19,18 +19,15 @@ const HeroSection = () => {
               <span className="text-gymstr-orange">Anywhere. Anytime.</span>
             </h1>
             <p className="text-xl md:text-2xl text-gymstr-beige/80 max-w-lg">
-              Decentralize your workout with GYMSTR. Access thousands of gyms worldwide with blockchain-powered freedom.
+              Decentralize your workout with Gymstr. Access thousands of gyms worldwide with blockchain-powered freedom.
             </p>
             <div className="flex flex-wrap gap-4 pt-4">
               <Button size="lg">
                 Start Free Trial
               </Button>
-              <Button variant="outline" size="lg">
-                Explore Gyms
-              </Button>
             </div>
             <p className="text-gymstr-beige/60 text-sm">
-              No credit card required. Cancel anytime.
+              No credit card required. Cancel anytime. All payments made by Nostr.
             </p>
           </div>
 

@@ -9,7 +9,7 @@ const Footer = () => {
           <div>
             <img 
               src="/lovable-uploads/05cc5987-1dba-47d1-b472-86707d23fd9d.png" 
-              alt="GYMSTR" 
+              alt="Gymstr" 
               className="h-12 mb-4"
             />
             <p className="text-gymstr-beige/70">
@@ -55,28 +55,17 @@ const Footer = () => {
           </div>
           
           <div>
-            <h3 className="font-semibold text-gymstr-beige text-lg mb-4">Newsletter</h3>
-            <p className="text-gymstr-beige/70 mb-4">Stay updated with the latest news and features.</p>
-            <form className="flex">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="bg-gymstr-navy/50 border border-gymstr-beige/10 text-gymstr-beige rounded-l-md px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-gymstr-orange"
-              />
-              <button
-                type="submit"
-                className="bg-gymstr-orange text-white px-4 py-2 rounded-r-md hover:bg-gymstr-orange/90"
-              >
-                Subscribe
-              </button>
-            </form>
+            <h3 className="font-semibold text-gymstr-beige text-lg mb-4">Powered By</h3>
+            <div className="flex items-center space-x-4">
+              <span className="text-xs font-semibold bg-gradient-to-r from-gymstr-orange to-gymstr-redOrange bg-clip-text text-transparent">Nostr Protocol</span>
+            </div>
           </div>
         </div>
         
         <div className="border-t border-white/5 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gymstr-beige/50 text-sm mb-4 md:mb-0">
-              © 2025 GYMSTR. All rights reserved.
+              © 2025 Gymstr. All rights reserved.
             </p>
             <div className="flex items-center space-x-4">
               <span className="text-xs text-gymstr-beige/50">Powered by</span>
