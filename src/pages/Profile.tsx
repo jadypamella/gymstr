@@ -1,8 +1,8 @@
+
 import React from 'react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { CalendarDays, MapPin, Award, Dumbbell, BarChart2, Clock, CheckCircle } from 'lucide-react';
 import Footer from '@/components/Footer';
 import Button from '@/components/Button';
@@ -137,16 +137,11 @@ const Profile = () => {
           </div>
         </div>
         
-        {/* Tabs for different sections */}
-        <Tabs defaultValue="workouts" className="space-y-6">
-          <TabsList className="bg-[#1E293B] border border-white/10">
-            <TabsTrigger value="workouts" className="data-[state=active]:bg-gymstr-orange data-[state=active]:text-white">Workout History</TabsTrigger>
-            <TabsTrigger value="memberships" className="data-[state=active]:bg-gymstr-orange data-[state=active]:text-white">Memberships</TabsTrigger>
-            <TabsTrigger value="achievements" className="data-[state=active]:bg-gymstr-orange data-[state=active]:text-white">Achievements</TabsTrigger>
-          </TabsList>
-          
-          <TabsContent value="workouts" className="space-y-4">
-            <h2 className="text-xl font-semibold mb-4">Recent Workouts</h2>
+        {/* Main content sections - now displayed all together */}
+        <div className="space-y-10">
+          {/* Workout History Section */}
+          <div className="space-y-4">
+            <h2 className="text-xl font-semibold">Recent Workouts</h2>
             {workoutHistory.map((workout, index) => (
               <Card key={index} className="bg-[#1E293B] border-white/10">
                 <CardContent className="p-4">
@@ -169,10 +164,11 @@ const Profile = () => {
                 </CardContent>
               </Card>
             ))}
-          </TabsContent>
+          </div>
           
-          <TabsContent value="memberships" className="space-y-4">
-            <h2 className="text-xl font-semibold mb-4">Membership History</h2>
+          {/* Membership History Section */}
+          <div className="space-y-4">
+            <h2 className="text-xl font-semibold">Membership History</h2>
             {membershipHistory.map((membership, index) => (
               <Card key={index} className="bg-[#1E293B] border-white/10">
                 <CardContent className="p-4">
@@ -200,10 +196,11 @@ const Profile = () => {
                 </CardContent>
               </Card>
             ))}
-          </TabsContent>
+          </div>
           
-          <TabsContent value="achievements" className="space-y-4">
-            <h2 className="text-xl font-semibold mb-4">Your Achievements</h2>
+          {/* Achievements Section */}
+          <div className="space-y-4">
+            <h2 className="text-xl font-semibold">Your Achievements</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {achievements.map((achievement, index) => (
                 <Card key={index} className="bg-[#1E293B] border-white/10">
@@ -221,8 +218,8 @@ const Profile = () => {
                 </Card>
               ))}
             </div>
-          </TabsContent>
-        </Tabs>
+          </div>
+        </div>
       </main>
 
       {/* Footer */}
