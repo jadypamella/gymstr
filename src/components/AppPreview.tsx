@@ -1,22 +1,22 @@
 
 import React from 'react';
 import Button from './Button';
-import { Smartphone, MapPin, Wallet, ShieldCheck } from 'lucide-react';
+import { MapPin, ShieldCheck, Wallet } from 'lucide-react';
 
 const AppPreview = () => {
   const features = [
     {
-      icon: <MapPin className="text-gymstr-orange" size={24} />,
+      icon: <MapPin className="text-gymstr-orange bg-gymstr-orange/10 p-2 rounded-lg" size={48} />,
       title: "Gym Finder",
       description: "Discover nearby gyms and filter by amenities, hours, and more."
     },
     {
-      icon: <ShieldCheck className="text-gymstr-orange" size={24} />,
+      icon: <ShieldCheck className="text-gymstr-orange bg-gymstr-orange/10 p-2 rounded-lg" size={48} />,
       title: "Secure Check-in",
       description: "Contactless entry with QR code verification."
     },
     {
-      icon: <Wallet className="text-gymstr-orange" size={24} />,
+      icon: <Wallet className="text-gymstr-orange bg-gymstr-orange/10 p-2 rounded-lg" size={48} />,
       title: "Nostr Wallet",
       description: "Integrated payments and rewards system."
     }
