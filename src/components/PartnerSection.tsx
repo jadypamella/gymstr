@@ -1,8 +1,8 @@
+
 import React, { useState } from 'react';
 import Button from './Button';
 import GymCard from './GymCard';
 import GymDetailsDialog, { GymDetailsProps } from './GymDetailsDialog';
-import LoginModal from './LoginModal';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet';
 import { Check, Lock, Zap, Globe } from 'lucide-react';
 
@@ -114,11 +114,9 @@ const PartnerSection = () => {
         </div>
 
         <div className="text-center mb-12">
-          <LoginModal>
-            <Button size="lg">
-              Membership
-            </Button>
-          </LoginModal>
+          <Button size="lg">
+            Browse All Gyms
+          </Button>
         </div>
 
         <div className="mt-24">
@@ -138,6 +136,7 @@ const PartnerSection = () => {
         </div>
       </div>
 
+      {/* Gym Details Dialog */}
       <GymDetailsDialog 
         gym={selectedGym} 
         open={showGymDetails} 
@@ -148,6 +147,7 @@ const PartnerSection = () => {
         }}
       />
 
+      {/* Membership Dialog */}
       {selectedGym && (
         <Sheet open={showMembershipDialog} onOpenChange={setShowMembershipDialog}>
           <SheetContent className="sm:max-w-md bg-[#1E293B] text-[#E2E8F0] border-l-white/10">
