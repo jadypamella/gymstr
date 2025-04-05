@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
@@ -7,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { CalendarDays, MapPin, Award, Dumbbell, BarChart2, Clock, CheckCircle } from 'lucide-react';
 import Footer from '@/components/Footer';
 import Button from '@/components/Button';
+import LoginModal from '@/components/LoginModal';
 
 const Profile = () => {
   // Mock user data - in a real app this would come from an API or context
