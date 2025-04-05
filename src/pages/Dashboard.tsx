@@ -13,7 +13,9 @@ import {
   Dumbbell, 
   CircleUser,
   LogOut,
-  User
+  User,
+  Wallet,
+  Zap
 } from 'lucide-react';
 import {
   Dialog,
@@ -53,6 +55,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import GymCard from '@/components/GymCard';
 import Footer from '@/components/Footer';
+import GymMap from '@/components/GymMap';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -309,6 +312,15 @@ const Dashboard = () => {
           </Drawer>
         </div>
 
+        {/* Map Section */}
+        <section className="mb-10">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-bold">Nearby Gyms Map</h2>
+          </div>
+          
+          <GymMap />
+        </section>
+
         {/* Top Picks Section */}
         <section className="mb-10">
           <div className="flex justify-between items-center mb-4">
@@ -379,7 +391,7 @@ const Dashboard = () => {
                     className="w-1/2 bg-[#22C55E] hover:bg-[#22C55E]/90 text-white"
                     onClick={() => openMembershipDialog(gym)}
                   >
-                    Join
+                    Start Membership
                   </Button>
                 </CardFooter>
               </Card>
@@ -427,7 +439,7 @@ const Dashboard = () => {
                       className="w-1/2 text-sm bg-[#22C55E] hover:bg-[#22C55E]/90 text-white"
                       onClick={() => openMembershipDialog(gym)}
                     >
-                      Join
+                      Start Membership
                     </Button>
                   </CardFooter>
                 </Card>
@@ -483,7 +495,7 @@ const Dashboard = () => {
                         className="bg-[#22C55E] hover:bg-[#22C55E]/90 text-white text-sm"
                         onClick={() => openMembershipDialog(gym)}
                       >
-                        Join
+                        Start Membership
                       </Button>
                     </div>
                   </div>
@@ -565,7 +577,7 @@ const Dashboard = () => {
                     openMembershipDialog(selectedGym);
                   }}
                 >
-                  Join
+                  Start Membership
                 </Button>
               </div>
             </>
@@ -585,7 +597,7 @@ const Dashboard = () => {
           
           {selectedGym && (
             <div className="space-y-4">
-              {/* Membership plans would go here */}
+              {/* Membership plans */}
               <div className="bg-gymstr-beige/5 p-4 rounded-md border border-white/10 flex justify-between items-center">
                 <div>
                   <h3 className="font-medium">Monthly Membership</h3>
@@ -619,11 +631,22 @@ const Dashboard = () => {
                 </div>
               </div>
               
+              <div className="bg-gymstr-beige/5 p-4 rounded-md border-white/10">
+                <h3 className="font-medium mb-3">Payment Method</h3>
+                <div className="flex items-center gap-3 p-3 bg-gymstr-navy/50 rounded-md">
+                  <Zap size={24} className="text-gymstr-orange fill-gymstr-orange/30" />
+                  <div>
+                    <div className="font-medium">Pay with Nostr</div>
+                    <div className="text-xs text-gymstr-beige/60">Quick, secure payments via the Nostr protocol</div>
+                  </div>
+                </div>
+              </div>
+              
               <Button 
                 className="w-full bg-[#22C55E] hover:bg-[#22C55E]/90 text-white"
                 onClick={() => setIsMembershipDialogOpen(false)}
               >
-                Continue to Payment
+                Continue with Nostr
               </Button>
             </div>
           )}
