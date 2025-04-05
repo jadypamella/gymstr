@@ -75,7 +75,7 @@ const Dashboard = () => {
       name: "PowerFit Gym",
       rating: 4.8,
       location: "Downtown São Paulo",
-      distance: "0.8",
+      distance: "0.8 km",
       image: "/lovable-uploads/e8254a03-16a8-46f7-9106-d7639107e343.png",
       features: ["24/7 Access", "Personal Trainers", "Sauna"],
       pricing: "From $50/month",
@@ -87,7 +87,7 @@ const Dashboard = () => {
       name: "CrossTrain Center",
       rating: 4.6,
       location: "Pinheiros, São Paulo",
-      distance: "1.2",
+      distance: "1.2 km",
       image: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=300&h=200",
       features: ["Group Classes", "CrossFit Equipment", "Nutrition Consulting"],
       pricing: "From $65/month",
@@ -99,7 +99,7 @@ const Dashboard = () => {
       name: "FlexZone",
       rating: 4.5,
       location: "Moema, São Paulo",
-      distance: "1.5",
+      distance: "1.5 km",
       image: "https://images.unsplash.com/photo-1579758629938-03607ccdbaba?auto=format&fit=crop&w=300&h=200",
       features: ["Premium Equipment", "Swimming Pool", "Spa"],
       pricing: "From $75/month",
@@ -111,8 +111,8 @@ const Dashboard = () => {
       name: "Iron Temple",
       rating: 4.7,
       location: "Vila Mariana, São Paulo",
-      distance: "2.3",
-      image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=300&h=200",
+      distance: "2.3 km",
+      image: "/lovable-uploads/9f43bcb7-bb7c-45b7-af99-487d39b24149.png",
       features: ["Bodybuilding Focus", "Free Weights", "Supplements Shop"],
       pricing: "From $45/month",
       popularity: "High",
@@ -123,7 +123,7 @@ const Dashboard = () => {
       name: "Yoga Harmony",
       rating: 4.9,
       location: "Jardins, São Paulo",
-      distance: "1.7",
+      distance: "1.7 km",
       image: "https://images.unsplash.com/photo-1588286840104-8957b019727f?auto=format&fit=crop&w=300&h=200",
       features: ["Hot Yoga", "Meditation Classes", "Wellness Programs"],
       pricing: "From $60/month",
@@ -135,7 +135,7 @@ const Dashboard = () => {
       name: "Cardio Kings",
       rating: 4.4,
       location: "Itaim Bibi, São Paulo",
-      distance: "2.8",
+      distance: "2.8 km",
       image: "https://images.unsplash.com/photo-1534258936925-c58bed479fcb?auto=format&fit=crop&w=300&h=200",
       features: ["Treadmill Zone", "Spin Classes", "Heart Rate Monitoring"],
       pricing: "From $55/month",
@@ -412,11 +412,13 @@ const Dashboard = () => {
             {filteredGyms.filter(gym => gym.tags.includes('Popular')).map((gym) => (
               <Card key={gym.id} className="bg-[#1A2235] border-white/10">
                 <div className="flex flex-col md:flex-row">
-                  <img 
-                    src={gym.image} 
-                    alt={gym.name} 
-                    className="w-full md:w-32 h-32 object-cover md:rounded-l"
-                  />
+                  <div className="md:w-32 md:h-32 h-40 w-full overflow-hidden">
+                    <img 
+                      src={gym.image} 
+                      alt={gym.name} 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
                   <div className="flex flex-col flex-1 p-4">
                     <div className="flex justify-between">
                       <h3 className="font-semibold">{gym.name}</h3>
@@ -426,7 +428,7 @@ const Dashboard = () => {
                       </div>
                     </div>
                     <p className="text-sm text-gymstr-beige/60 flex items-center gap-1 mt-1">
-                      <MapPin size={14} /> {gym.location} ({gym.distance} km)
+                      <MapPin size={14} /> {gym.location} ({gym.distance})
                     </p>
                     <div className="flex flex-wrap gap-2 mt-2">
                       <Badge variant="outline" className="bg-gymstr-beige/5">
