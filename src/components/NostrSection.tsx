@@ -48,42 +48,46 @@ const NostrSection = () => {
               
               <h3 className="text-2xl md:text-3xl font-bold text-gymstr-beige mb-6">How Nostr Works with GYMSTR</h3>
               
-              {/* Diagram */}
-              <div className="relative my-8">
-                <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-gymstr-orange via-gymstr-orange/50 to-transparent"></div>
+              {/* Improved Diagram with visual connections */}
+              <div className="relative my-8 bg-black/20 p-6 rounded-lg">
+                <div className="absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-gymstr-orange via-gymstr-orange/50 to-transparent"></div>
                 
                 {/* Step 1 */}
-                <div className="mb-8 ml-12 relative">
-                  <div className="absolute -left-12 -translate-x-1/2 w-6 h-6 rounded-full bg-gymstr-orange flex items-center justify-center">
-                    <span className="text-xs font-bold">1</span>
+                <div className="mb-10 ml-16 relative">
+                  <div className="absolute -left-16 w-8 h-8 rounded-full bg-gymstr-orange flex items-center justify-center">
+                    <span className="text-sm font-bold">1</span>
                   </div>
+                  <div className="absolute -left-8 top-4 w-8 h-0.5 bg-gymstr-orange/70"></div>
                   <h4 className="text-lg font-semibold text-gymstr-beige mb-2">Create your Nostr identity</h4>
                   <p className="text-gymstr-beige/70">Generate your cryptographic keys that uniquely identify you on the network.</p>
                 </div>
                 
                 {/* Step 2 */}
-                <div className="mb-8 ml-12 relative">
-                  <div className="absolute -left-12 -translate-x-1/2 w-6 h-6 rounded-full bg-gymstr-orange flex items-center justify-center">
-                    <span className="text-xs font-bold">2</span>
+                <div className="mb-10 ml-16 relative">
+                  <div className="absolute -left-16 w-8 h-8 rounded-full bg-gymstr-orange flex items-center justify-center">
+                    <span className="text-sm font-bold">2</span>
                   </div>
+                  <div className="absolute -left-8 top-4 w-8 h-0.5 bg-gymstr-orange/70"></div>
                   <h4 className="text-lg font-semibold text-gymstr-beige mb-2">Authenticate with GYMSTR</h4>
                   <p className="text-gymstr-beige/70">Securely log in without passwords using your Nostr keys.</p>
                 </div>
                 
                 {/* Step 3 */}
-                <div className="mb-8 ml-12 relative">
-                  <div className="absolute -left-12 -translate-x-1/2 w-6 h-6 rounded-full bg-gymstr-orange flex items-center justify-center">
-                    <span className="text-xs font-bold">3</span>
+                <div className="mb-10 ml-16 relative">
+                  <div className="absolute -left-16 w-8 h-8 rounded-full bg-gymstr-orange flex items-center justify-center">
+                    <span className="text-sm font-bold">3</span>
                   </div>
+                  <div className="absolute -left-8 top-4 w-8 h-0.5 bg-gymstr-orange/70"></div>
                   <h4 className="text-lg font-semibold text-gymstr-beige mb-2">Access fitness facilities</h4>
                   <p className="text-gymstr-beige/70">Your encrypted Nostr identity grants you access to GYMSTR partner locations.</p>
                 </div>
                 
                 {/* Step 4 */}
-                <div className="ml-12 relative">
-                  <div className="absolute -left-12 -translate-x-1/2 w-6 h-6 rounded-full bg-gymstr-orange flex items-center justify-center">
-                    <span className="text-xs font-bold">4</span>
+                <div className="ml-16 relative">
+                  <div className="absolute -left-16 w-8 h-8 rounded-full bg-gymstr-orange flex items-center justify-center">
+                    <span className="text-sm font-bold">4</span>
                   </div>
+                  <div className="absolute -left-8 top-4 w-8 h-0.5 bg-gymstr-orange/70"></div>
                   <h4 className="text-lg font-semibold text-gymstr-beige mb-2">Process payments</h4>
                   <p className="text-gymstr-beige/70">Use Lightning Network for fast, secure, and low-fee payments.</p>
                 </div>
