@@ -1,37 +1,72 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import Button from './Button';
 import GymCard from './GymCard';
+import GymDetailsDialog, { GymDetailsProps } from './GymDetailsDialog';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet';
+import { Check, Lock, Zap, Globe } from 'lucide-react';
 
 const PartnerSection = () => {
+  const [selectedGym, setSelectedGym] = useState<GymDetailsProps | null>(null);
+  const [showGymDetails, setShowGymDetails] = useState(false);
+  const [showMembershipDialog, setShowMembershipDialog] = useState(false);
+
   const partnerGyms = [
     {
       name: "FitLife Studio",
       image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
       rating: 4.8,
       location: "New York, NY",
-      amenities: ["24/7 Access", "Sauna", "Personal Training"]
+      amenities: ["24/7 Access", "Sauna", "Personal Training"],
+      description: "A modern fitness center with state-of-the-art equipment and professional trainers.",
+      acceptsLightning: true,
+      gallery: [
+        "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1593079831268-3381b0db4a77?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+      ]
     },
     {
       name: "Elevation Fitness",
       image: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
       rating: 4.6,
       location: "Los Angeles, CA",
-      amenities: ["Pool", "Group Classes", "Nutrition"]
+      amenities: ["Pool", "Group Classes", "Nutrition"],
+      description: "Specialized in high-intensity functional training and CrossFit classes.",
+      acceptsLightning: true,
+      gallery: [
+        "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1574680096145-d05b474e2155?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1593079831268-3381b0db4a77?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+      ]
     },
     {
       name: "PowerHouse Gym",
       image: "https://images.unsplash.com/photo-1540497077202-7c8a3999166f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
       rating: 4.9,
       location: "Chicago, IL",
-      amenities: ["CrossFit", "Heavy Weights", "Boxing"]
+      amenities: ["CrossFit", "Heavy Weights", "Boxing"],
+      description: "A premium fitness club with comprehensive training programs and specialized equipment.",
+      acceptsLightning: false,
+      gallery: [
+        "https://images.unsplash.com/photo-1540497077202-7c8a3999166f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1593079831268-3381b0db4a77?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+      ]
     },
     {
       name: "Zen Wellness Center",
       image: "https://images.unsplash.com/photo-1574680178050-55c6a6a96e0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
       rating: 4.7,
       location: "Austin, TX",
-      amenities: ["Yoga", "Meditation", "Spa"]
+      amenities: ["Yoga", "Meditation", "Spa"],
+      description: "A peaceful sanctuary offering various yoga styles and meditation practices.",
+      acceptsLightning: true,
+      gallery: [
+        "https://images.unsplash.com/photo-1574680178050-55c6a6a96e0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1574680096145-d05b474e2155?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1593079831268-3381b0db4a77?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+      ]
     }
   ];
 
@@ -39,6 +74,16 @@ const PartnerSection = () => {
     "Equinox", "Planet Fitness", "Gold's Gym", "Anytime Fitness", 
     "LA Fitness", "24 Hour Fitness", "Crunch Fitness", "Orange Theory"
   ];
+
+  const handleViewDetails = (gym: GymDetailsProps) => {
+    setSelectedGym(gym);
+    setShowGymDetails(true);
+  };
+
+  const handleJoin = (gym: GymDetailsProps) => {
+    setSelectedGym(gym);
+    setShowMembershipDialog(true);
+  };
 
   return (
     <section id="partners" className="py-24 relative bg-gymstr-navy/95">
@@ -59,6 +104,11 @@ const PartnerSection = () => {
               rating={gym.rating}
               location={gym.location}
               amenities={gym.amenities}
+              description={gym.description}
+              acceptsLightning={gym.acceptsLightning}
+              gallery={gym.gallery}
+              onViewDetails={handleViewDetails}
+              onJoin={handleJoin}
             />
           ))}
         </div>
@@ -85,6 +135,122 @@ const PartnerSection = () => {
           </div>
         </div>
       </div>
+
+      {/* Gym Details Dialog */}
+      <GymDetailsDialog 
+        gym={selectedGym} 
+        open={showGymDetails} 
+        onOpenChange={setShowGymDetails}
+        onJoin={(gym) => {
+          setShowGymDetails(false);
+          handleJoin(gym);
+        }}
+      />
+
+      {/* Membership Dialog */}
+      {selectedGym && (
+        <Sheet open={showMembershipDialog} onOpenChange={setShowMembershipDialog}>
+          <SheetContent className="sm:max-w-md bg-[#1E293B] text-[#E2E8F0] border-l-white/10">
+            <SheetHeader>
+              <SheetTitle className="text-[#E2E8F0]">Start Membership</SheetTitle>
+              <SheetDescription className="text-[#E2E8F0]/70">
+                Subscribe to {selectedGym.name}
+              </SheetDescription>
+            </SheetHeader>
+            
+            <div className="py-6">
+              <div className="bg-[#111827] rounded-lg p-4 mb-6 border border-white/10">
+                <h3 className="font-medium mb-3">{selectedGym.name}</h3>
+                <div className="flex justify-between mb-3">
+                  <span className="text-[#E2E8F0]/70">Monthly Membership</span>
+                  <span className="font-medium">$29.99</span>
+                </div>
+                <div className="flex justify-between mb-4 text-sm">
+                  <span className="text-[#E2E8F0]/70">≈ 83,000 sats</span>
+                  <span className="text-[#F7931A]">0.00083000 BTC</span>
+                </div>
+                
+                <div className="rounded-lg bg-white p-4 flex justify-center">
+                  <div className="w-36 h-36 bg-black flex items-center justify-center">
+                    <Zap size={48} className="text-white" />
+                  </div>
+                </div>
+                <button className="mt-3 text-sm text-center w-full py-2 border border-white/20 rounded-md hover:bg-white/5 transition-colors">
+                  Copy Invoice
+                </button>
+              </div>
+              
+              <div className="bg-[#1F2937] rounded-lg p-4 border border-white/10">
+                <h4 className="font-medium mb-3">Nostr-Powered Payment Benefits</h4>
+                <ul className="space-y-3">
+                  <li className="flex items-start">
+                    <div className="mt-1 mr-3 p-1 bg-[#22C55E]/20 rounded-full">
+                      <Check size={12} className="text-[#22C55E]" />
+                    </div>
+                    <div>
+                      <span className="font-medium">Decentralized</span>
+                      <p className="text-sm text-[#E2E8F0]/70">No middlemen. The payment goes directly to the gym.</p>
+                    </div>
+                  </li>
+                  <li className="flex items-start">
+                    <div className="mt-1 mr-3 p-1 bg-[#22C55E]/20 rounded-full">
+                      <Lock size={12} className="text-[#22C55E]" />
+                    </div>
+                    <div>
+                      <span className="font-medium">Privacy-first</span>
+                      <p className="text-sm text-[#E2E8F0]/70">You use your cryptographic identity — no emails or passwords needed.</p>
+                    </div>
+                  </li>
+                  <li className="flex items-start">
+                    <div className="mt-1 mr-3 p-1 bg-[#22C55E]/20 rounded-full">
+                      <Zap size={12} className="text-[#22C55E]" />
+                    </div>
+                    <div>
+                      <span className="font-medium">Fast & low fees</span>
+                      <p className="text-sm text-[#E2E8F0]/70">Payments are done instantly with the Lightning Network.</p>
+                    </div>
+                  </li>
+                  <li className="flex items-start">
+                    <div className="mt-1 mr-3 p-1 bg-[#22C55E]/20 rounded-full">
+                      <Check size={12} className="text-[#22C55E]" />
+                    </div>
+                    <div>
+                      <span className="font-medium">Proven ownership</span>
+                      <p className="text-sm text-[#E2E8F0]/70">Your booking is signed with your Nostr key.</p>
+                    </div>
+                  </li>
+                  <li className="flex items-start">
+                    <div className="mt-1 mr-3 p-1 bg-[#22C55E]/20 rounded-full">
+                      <Globe size={12} className="text-[#22C55E]" />
+                    </div>
+                    <div>
+                      <span className="font-medium">Global & open</span>
+                      <p className="text-sm text-[#E2E8F0]/70">Anyone, anywhere can participate.</p>
+                    </div>
+                  </li>
+                </ul>
+                <p className="text-sm text-center mt-4 text-[#E2E8F0]/70">
+                  This transaction is verified through Nostr. You own the proof.
+                </p>
+              </div>
+              
+              <div className="flex gap-3 mt-6">
+                <button 
+                  className="flex-1 py-2 bg-transparent border border-white/20 rounded-md text-[#E2E8F0] hover:bg-white/5 transition-colors"
+                  onClick={() => setShowMembershipDialog(false)}
+                >
+                  Cancel
+                </button>
+                <button 
+                  className="flex-1 py-2 bg-[#22C55E] rounded-md text-white hover:bg-[#22C55E]/90 transition-colors"
+                >
+                  Confirm and Pay
+                </button>
+              </div>
+            </div>
+          </SheetContent>
+        </Sheet>
+      )}
     </section>
   );
 };

@@ -1,18 +1,59 @@
 
 import React from 'react';
 import { Star, MapPin, Zap } from 'lucide-react';
+import { GymDetailsProps } from './GymDetailsDialog';
 
-interface GymCardProps {
-  name: string;
-  image: string;
-  rating: number;
-  location: string;
-  amenities: string[];
-  distance?: string;
-  acceptsLightning?: boolean;
+interface GymCardProps extends GymDetailsProps {
+  onViewDetails?: (gym: GymDetailsProps) => void;
+  onJoin?: (gym: GymDetailsProps) => void;
 }
 
-const GymCard = ({ name, image, rating, location, amenities, distance, acceptsLightning }: GymCardProps) => {
+const GymCard = ({ 
+  name, 
+  image, 
+  rating, 
+  location, 
+  amenities, 
+  distance, 
+  acceptsLightning,
+  description,
+  gallery,
+  onViewDetails,
+  onJoin
+}: GymCardProps) => {
+  
+  const handleViewDetails = () => {
+    if (onViewDetails) {
+      onViewDetails({
+        name,
+        image,
+        rating,
+        location,
+        amenities,
+        distance,
+        acceptsLightning,
+        description,
+        gallery
+      });
+    }
+  };
+
+  const handleJoin = () => {
+    if (onJoin) {
+      onJoin({
+        name,
+        image,
+        rating,
+        location,
+        amenities,
+        distance,
+        acceptsLightning,
+        description,
+        gallery
+      });
+    }
+  };
+
   return (
     <div className="glass rounded-xl overflow-hidden border border-gymstr-beige/10 hover:border-gymstr-orange/30 transition-all duration-300 hover-scale group">
       <div className="aspect-[4/3] relative overflow-hidden">
@@ -60,10 +101,16 @@ const GymCard = ({ name, image, rating, location, amenities, distance, acceptsLi
           ))}
         </div>
         <div className="mt-4 flex gap-2">
-          <button className="w-1/2 py-2 rounded-md bg-transparent border border-gymstr-orange text-gymstr-orange font-medium hover:bg-gymstr-orange/10 transition-colors">
+          <button 
+            onClick={handleViewDetails}
+            className="w-1/2 py-2 rounded-md bg-transparent border border-gymstr-orange text-gymstr-orange font-medium hover:bg-gymstr-orange/10 transition-colors"
+          >
             View Details
           </button>
-          <button className="w-1/2 py-2 rounded-md bg-[#22C55E] text-white font-medium hover:bg-[#22C55E]/90 transition-colors">
+          <button 
+            onClick={handleJoin}
+            className="w-1/2 py-2 rounded-md bg-[#22C55E] text-white font-medium hover:bg-[#22C55E]/90 transition-colors"
+          >
             Start Membership
           </button>
         </div>
