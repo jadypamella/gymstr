@@ -162,7 +162,7 @@ const Dashboard = () => {
   const user = {
     name: "Alex Johnson",
     location: "São Paulo, Brazil",
-    image: "/lovable-uploads/32a4f8e5-5a4e-45e3-9573-ff7d5b5ddf24.png",
+    image: "/lovable-uploads/a9d713a6-e3a0-4bdb-95b9-414ba01b8439.png",
     workouts: 137,
     gymsVisited: 12,
     achievements: 8,
