@@ -349,6 +349,7 @@ const Dashboard = () => {
                 acceptsLightning={true}
                 onViewDetails={() => openDetailsDialog(gym)}
                 onStartMembership={() => openMembershipDialog(gym)}
+                showLoginForMembership={true}
               />
             ))}
           </div>
@@ -389,12 +390,13 @@ const Dashboard = () => {
                     >
                       View Details
                     </Button>
-                    <Button 
-                      className="w-1/2 text-sm bg-[#22C55E] hover:bg-[#22C55E]/80 text-white"
-                      onClick={() => openMembershipDialog(gym)}
-                    >
-                      Start Membership
-                    </Button>
+                    <LoginModal>
+                      <Button 
+                        className="w-1/2 text-sm bg-[#22C55E] hover:bg-[#22C55E]/80 text-white"
+                      >
+                        Start Membership
+                      </Button>
+                    </LoginModal>
                   </CardFooter>
                 </Card>
               ))}
@@ -446,12 +448,13 @@ const Dashboard = () => {
                       >
                         View Details
                       </Button>
-                      <Button 
-                        className="bg-[#22C55E] hover:bg-[#22C55E]/80 text-white text-sm"
-                        onClick={() => openMembershipDialog(gym)}
-                      >
-                        Start Membership
-                      </Button>
+                      <LoginModal>
+                        <Button 
+                          className="bg-[#22C55E] hover:bg-[#22C55E]/80 text-white text-sm"
+                        >
+                          Start Membership
+                        </Button>
+                      </LoginModal>
                     </div>
                   </div>
                 </div>

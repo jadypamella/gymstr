@@ -14,7 +14,7 @@ const LoginModal = ({ children }: LoginModalProps) => {
       <DialogTrigger asChild>
         {children || <Button variant="outline">Login</Button>}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md border-gymstr-beige/10 bg-transparent p-0">
+      <DialogContent className="sm:max-w-md border-gymstr-beige/10 bg-[#1A2235] p-0">
         <NostrLogin />
       </DialogContent>
     </Dialog>

@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/hover-card';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
+import LoginModal from './LoginModal';
 
 interface GymCardProps {
   name: string;
@@ -20,6 +21,7 @@ interface GymCardProps {
   acceptsLightning?: boolean;
   onViewDetails?: () => void;
   onStartMembership?: () => void;
+  showLoginForMembership?: boolean;
 }
 
 const GymCard = ({ 
@@ -31,9 +33,16 @@ const GymCard = ({
   distance, 
   acceptsLightning, 
   onViewDetails,
-  onStartMembership 
+  onStartMembership,
+  showLoginForMembership = false
 }: GymCardProps) => {
   const [selectedMembershipType, setSelectedMembershipType] = React.useState('monthly');
+
+  const handleStartMembership = () => {
+    if (onStartMembership) {
+      onStartMembership();
+    }
+  };
 
   return (
     <div className="glass rounded-xl overflow-hidden border border-gymstr-beige/10 hover:border-gymstr-orange/30 transition-all duration-300 hover-scale group">
@@ -89,55 +98,66 @@ const GymCard = ({
           >
             View Details
           </Button>
-          <HoverCard>
-            <HoverCardTrigger asChild>
+          
+          {showLoginForMembership ? (
+            <LoginModal>
               <Button 
                 className="w-1/2 bg-[#22C55E] hover:bg-[#22C55E]/80 text-white transition-colors"
-                onClick={onStartMembership}
               >
                 Start Membership
               </Button>
-            </HoverCardTrigger>
-            <HoverCardContent className="w-80 bg-[#1A2235] text-gymstr-beige border-white/10">
-              <div className="space-y-4">
-                <h4 className="font-medium">Choose a membership plan</h4>
-                <RadioGroup 
-                  value={selectedMembershipType}
-                  onValueChange={setSelectedMembershipType}
-                  className="space-y-3"
+            </LoginModal>
+          ) : (
+            <HoverCard>
+              <HoverCardTrigger asChild>
+                <Button 
+                  className="w-1/2 bg-[#22C55E] hover:bg-[#22C55E]/80 text-white transition-colors"
+                  onClick={handleStartMembership}
                 >
-                  <div className="flex items-center justify-between space-x-2 p-2 rounded hover:bg-gymstr-beige/5">
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="monthly" id="monthly" className="text-gymstr-orange" />
-                      <Label htmlFor="monthly">Monthly Membership</Label>
-                    </div>
-                    <span className="font-medium">$50/mo</span>
-                  </div>
-                  <div className="flex items-center justify-between space-x-2 p-2 rounded hover:bg-gymstr-beige/5">
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="annual" id="annual" className="text-gymstr-orange" />
-                      <Label htmlFor="annual">Annual Membership</Label>
-                    </div>
-                    <span className="font-medium">$480/yr</span>
-                  </div>
-                  <div className="flex items-center justify-between space-x-2 p-2 rounded hover:bg-gymstr-beige/5">
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="daypass" id="daypass" className="text-gymstr-orange" />
-                      <Label htmlFor="daypass">Day Pass</Label>
-                    </div>
-                    <span className="font-medium">$15</span>
-                  </div>
-                </RadioGroup>
-                <div className="flex items-center gap-2 p-3 bg-gymstr-navy/50 rounded border border-gymstr-orange/30">
-                  <Zap size={20} className="text-gymstr-orange fill-gymstr-orange/30" />
-                  <div className="text-sm">Pay with Nostr Protocol</div>
-                </div>
-                <Button className="w-full bg-[#22C55E] hover:bg-[#22C55E]/90 text-white">
-                  Continue with Nostr
+                  Start Membership
                 </Button>
-              </div>
-            </HoverCardContent>
-          </HoverCard>
+              </HoverCardTrigger>
+              <HoverCardContent className="w-80 bg-[#1A2235] text-gymstr-beige border-white/10">
+                <div className="space-y-4">
+                  <h4 className="font-medium">Choose a membership plan</h4>
+                  <RadioGroup 
+                    value={selectedMembershipType}
+                    onValueChange={setSelectedMembershipType}
+                    className="space-y-3"
+                  >
+                    <div className="flex items-center justify-between space-x-2 p-2 rounded hover:bg-gymstr-beige/5">
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="monthly" id="monthly" className="text-gymstr-orange" />
+                        <Label htmlFor="monthly">Monthly Membership</Label>
+                      </div>
+                      <span className="font-medium">$50/mo</span>
+                    </div>
+                    <div className="flex items-center justify-between space-x-2 p-2 rounded hover:bg-gymstr-beige/5">
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="annual" id="annual" className="text-gymstr-orange" />
+                        <Label htmlFor="annual">Annual Membership</Label>
+                      </div>
+                      <span className="font-medium">$480/yr</span>
+                    </div>
+                    <div className="flex items-center justify-between space-x-2 p-2 rounded hover:bg-gymstr-beige/5">
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="daypass" id="daypass" className="text-gymstr-orange" />
+                        <Label htmlFor="daypass">Day Pass</Label>
+                      </div>
+                      <span className="font-medium">$15</span>
+                    </div>
+                  </RadioGroup>
+                  <div className="flex items-center gap-2 p-3 bg-gymstr-navy/50 rounded border border-gymstr-orange/30">
+                    <Zap size={20} className="text-gymstr-orange fill-gymstr-orange/30" />
+                    <div className="text-sm">Pay with Nostr Protocol</div>
+                  </div>
+                  <Button className="w-full bg-[#22C55E] hover:bg-[#22C55E]/90 text-white">
+                    Continue with Nostr
+                  </Button>
+                </div>
+              </HoverCardContent>
+            </HoverCard>
+          )}
         </div>
       </div>
     </div>
