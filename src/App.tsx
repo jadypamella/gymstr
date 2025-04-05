@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -5,15 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
-import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
-import Membership from "./pages/Membership";
-
-// Set the favicon
-const favicon = document.querySelector('link[rel="icon"]');
-if (favicon) {
-  favicon.setAttribute('href', '/lovable-uploads/a9d713a6-e3a0-4bdb-95b9-414ba01b8439.png');
-}
 
 const queryClient = new QueryClient();
 
@@ -26,8 +19,6 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/membership" element={<Membership />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -22,8 +22,8 @@ const Button = ({
   
   const variants = {
     primary: 'bg-gymstr-orange text-white hover:bg-gymstr-orange/90',
-    outline: 'border border-gymstr-beige/20 hover:bg-gymstr-orange/10 text-gymstr-beige hover:text-gymstr-orange', // Updated hover style
-    ghost: 'hover:bg-gymstr-orange/10 text-gymstr-beige hover:text-gymstr-orange', // Updated hover style
+    outline: 'border border-gymstr-beige/20 hover:bg-gymstr-beige/10 text-gymstr-beige',
+    ghost: 'hover:bg-gymstr-beige/10 text-gymstr-beige',
   };
 
   const sizes = {

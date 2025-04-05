@@ -54,6 +54,9 @@ const Navbar = () => {
           <a href="#nostr" className="text-gymstr-beige hover:text-gymstr-orange transition-colors">
             Nostr
           </a>
+          <a href="#pricing" className="text-gymstr-beige hover:text-gymstr-orange transition-colors">
+            Pricing
+          </a>
           <LoginModal>
             <Button variant="outline" size="sm">
               Login
@@ -105,6 +108,13 @@ const Navbar = () => {
             onClick={() => setIsMenuOpen(false)}
           >
             Nostr
+          </a>
+          <a 
+            href="#pricing" 
+            className="block py-2 text-lg text-gymstr-beige hover:text-gymstr-orange"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Pricing
           </a>
           <div className="pt-2">
             <LoginModal>
