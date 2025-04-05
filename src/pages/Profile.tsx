@@ -13,7 +13,7 @@ const Profile = () => {
     name: "Alex Johnson",
     location: "São Paulo, Brazil",
     memberSince: "January 2024",
-    image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?auto=format&fit=crop&w=150&h=150",
+    image: "/lovable-uploads/e24a2bfd-3ee7-4cb4-8510-f1d3f413f874.png", // Updated image URL
     bio: "Fitness enthusiast with a passion for weightlifting and functional training. Always looking for new gyms to try out while traveling.",
     stats: {
       workouts: 137,
