@@ -174,7 +174,7 @@ const PartnerSection = () => {
 
       {selectedGym && (
         <Sheet open={showMembershipDialog} onOpenChange={setShowMembershipDialog}>
-          <SheetContent className="sm:max-w-md bg-[#1E293B] text-[#E2E8F0] border-l-white/10">
+          <SheetContent className="sm:max-w-md bg-[#1E293B] text-[#E2E8F0] border-l-white/10 flex flex-col">
             <SheetHeader>
               <SheetTitle className="text-[#E2E8F0]">Start Membership</SheetTitle>
               <SheetDescription className="text-[#E2E8F0]/70">
@@ -182,7 +182,7 @@ const PartnerSection = () => {
               </SheetDescription>
             </SheetHeader>
             
-            <ScrollArea className="h-[calc(100vh-8rem)] pr-4">
+            <ScrollArea className="flex-grow overflow-y-auto pr-4">
               <div className="py-6">
                 <div className="bg-[#111827] rounded-lg p-4 mb-6 border border-white/10">
                   <h3 className="font-medium mb-3">{selectedGym.name}</h3>
@@ -270,15 +270,15 @@ const PartnerSection = () => {
               </div>
             </ScrollArea>
             
-            <div className="flex gap-3 mt-6">
+            <div className="flex gap-3 mt-6 w-full">
               <button 
-                className="flex-1 py-2 bg-transparent border border-white/20 rounded-md text-[#E2E8F0] hover:bg-white/5 transition-colors"
+                className="flex-1 py-3 bg-transparent border border-white/20 rounded-md text-[#E2E8F0] hover:bg-white/5 transition-colors"
                 onClick={() => setShowMembershipDialog(false)}
               >
                 Cancel
               </button>
               <button 
-                className="flex-1 py-2 bg-[#22C55E] rounded-md text-white hover:bg-[#22C55E]/90 transition-colors"
+                className="flex-1 py-3 bg-[#22C55E] rounded-md text-white hover:bg-[#22C55E]/90 transition-colors"
               >
                 Confirm and Pay
               </button>
