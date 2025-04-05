@@ -6,6 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { CalendarDays, MapPin, Award, Dumbbell, BarChart2, Clock, CheckCircle } from 'lucide-react';
 import Footer from '@/components/Footer';
+import Button from '@/components/Button';
 
 const Profile = () => {
   // Mock user data - in a real app this would come from an API or context
@@ -61,11 +62,10 @@ const Profile = () => {
           <div className="hidden md:flex items-center space-x-6">
             <a href="/" className="font-medium text-[#E2E8F0] hover:text-white transition-colors">Home</a>
             <a href="/dashboard" className="font-medium text-[#E2E8F0] hover:text-white transition-colors">Dashboard</a>
-            <a href="#wallet" className="font-medium text-[#E2E8F0] hover:text-white transition-colors">Wallet</a>
             <a href="/profile" className="font-medium text-gymstr-orange hover:text-gymstr-orange/80 transition-colors">Profile</a>
-            <button className="font-medium text-[#E2E8F0] hover:text-white transition-colors flex items-center gap-1">
+            <Button variant="outline" size="sm">
               Log out
-            </button>
+            </Button>
           </div>
         </div>
       </header>
