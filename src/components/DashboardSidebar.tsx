@@ -3,8 +3,7 @@ import React from "react";
 import { useLocation, Link } from "react-router-dom";
 import { 
   User, 
-  Home, 
-  Settings,
+  Home
 } from "lucide-react";
 import {
   Sidebar,
@@ -23,7 +22,7 @@ export function DashboardSidebar() {
   const location = useLocation();
   const isActive = (path: string) => location.pathname === path;
 
-  // Dashboard navigation items - wallet menu removed
+  // Dashboard navigation items - settings menu removed
   const navItems = [
     {
       title: "Dashboard",
@@ -34,11 +33,6 @@ export function DashboardSidebar() {
       title: "Profile",
       path: "/profile",
       icon: User,
-    },
-    {
-      title: "Settings",
-      path: "/settings",
-      icon: Settings,
     }
   ];
 
