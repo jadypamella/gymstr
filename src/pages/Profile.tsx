@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
@@ -14,7 +13,7 @@ const Profile = () => {
     name: "Alex Johnson",
     location: "São Paulo, Brazil",
     memberSince: "January 2024",
-    image: "/lovable-uploads/a9d713a6-e3a0-4bdb-95b9-414ba01b8439.png",
+    image: "/lovable-uploads/32a4f8e5-5a4e-45e3-9573-ff7d5b5ddf24.png",
     bio: "Fitness enthusiast with a passion for weightlifting and functional training. Always looking for new gyms to try out while traveling.",
     stats: {
       workouts: 137,
