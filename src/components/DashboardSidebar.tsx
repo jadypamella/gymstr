@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useLocation, Link } from "react-router-dom";
 import { 
@@ -80,9 +79,6 @@ export function DashboardSidebar() {
                 <AvatarImage src={user.avatarUrl} alt={user.name} />
                 <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
               </Avatar>
-              <div className="absolute -bottom-2 -right-2 bg-[#22C55E] rounded-full p-1.5 border-2 border-[#1E293B]">
-                <CheckCircle className="w-4 h-4 text-white" />
-              </div>
             </div>
             <div>
               <h2 className="text-lg font-bold">{user.name}</h2>
