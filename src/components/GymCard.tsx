@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Star, MapPin } from 'lucide-react';
+import { Star, MapPin, Lightning } from 'lucide-react';
 
 interface GymCardProps {
   name: string;
@@ -8,9 +8,11 @@ interface GymCardProps {
   rating: number;
   location: string;
   amenities: string[];
+  distance?: string;
+  acceptsLightning?: boolean;
 }
 
-const GymCard = ({ name, image, rating, location, amenities }: GymCardProps) => {
+const GymCard = ({ name, image, rating, location, amenities, distance, acceptsLightning }: GymCardProps) => {
   return (
     <div className="glass rounded-xl overflow-hidden border border-gymstr-beige/10 hover:border-gymstr-orange/30 transition-all duration-300 hover-scale group">
       <div className="aspect-[4/3] relative overflow-hidden">
@@ -26,8 +28,17 @@ const GymCard = ({ name, image, rating, location, amenities }: GymCardProps) => 
               <Star className="text-gymstr-orange fill-gymstr-orange mr-1" size={16} />
               <span className="text-gymstr-beige font-medium">{rating.toFixed(1)}</span>
             </div>
-            <div className="bg-gymstr-orange/90 text-white py-1 px-3 rounded-full text-xs font-medium">
-              Member Access
+            <div className="flex items-center gap-2">
+              {distance && (
+                <div className="bg-gymstr-navy/80 text-gymstr-beige py-1 px-3 rounded-full text-xs font-medium">
+                  {distance}
+                </div>
+              )}
+              {acceptsLightning && (
+                <div className="bg-gymstr-orange/90 text-white p-1 rounded-full">
+                  <Lightning size={14} className="fill-current" />
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -48,6 +59,9 @@ const GymCard = ({ name, image, rating, location, amenities }: GymCardProps) => 
             </span>
           ))}
         </div>
+        <button className="mt-4 w-full py-2 rounded-md bg-gymstr-orange text-white font-medium hover:bg-gymstr-orange/90 transition-colors">
+          View Details
+        </button>
       </div>
     </div>
   );
