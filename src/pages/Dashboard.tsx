@@ -76,7 +76,7 @@ const Dashboard = () => {
       rating: 4.8,
       location: "Downtown São Paulo",
       distance: "0.8",
-      image: "/lovable-uploads/a9d713a6-e3a0-4bdb-95b9-414ba01b8439.png",
+      image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=300&h=200",
       features: ["24/7 Access", "Personal Trainers", "Sauna"],
       pricing: "From $50/month",
       popularity: "Very High",
@@ -162,7 +162,7 @@ const Dashboard = () => {
   const user = {
     name: "Alex Johnson",
     location: "São Paulo, Brazil",
-    image: "/lovable-uploads/32a4f8e5-5a4e-45e3-9573-ff7d5b5ddf24.png",
+    image: "/lovable-uploads/10306ff1-f078-494c-b9ae-0dd4bbe40e49.png",
     workouts: 137,
     gymsVisited: 12,
     achievements: 8,
