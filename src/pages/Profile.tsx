@@ -21,6 +21,13 @@ const Profile = () => {
       gymsVisited: 12,
       achievements: 8,
       streak: 14
+    },
+    // Added current active membership
+    activeMembership: {
+      gym: "PowerFit Gym",
+      type: "Monthly",
+      startDate: "March 1, 2025",
+      endDate: "April 30, 2025"
     }
   };
 
@@ -77,14 +84,17 @@ const Profile = () => {
         {/* Profile Header Section */}
         <div className="bg-[#1E293B] rounded-xl p-6 mb-8 border border-white/10">
           <div className="flex flex-col md:flex-row gap-6 items-center md:items-start">
-            {/* Avatar */}
+            {/* Avatar with verification badge updated to match dashboard style */}
             <div className="relative">
               <Avatar className="w-24 h-24 border-4 border-gymstr-orange">
                 <AvatarImage src={user.image} alt={user.name} />
                 <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
               </Avatar>
-              <div className="absolute -bottom-1 -right-1 bg-[#22C55E] rounded-full p-1">
-                <CheckCircle className="w-4 h-4 text-white" />
+              {/* Updated verification badge to match dashboard style */}
+              <div className="absolute -bottom-2 -right-2 rounded-full">
+                <div className="bg-[#22C55E] rounded-full p-1.5 border-2 border-[#1E293B]">
+                  <CheckCircle className="w-4 h-4 text-white" />
+                </div>
               </div>
             </div>
             
@@ -112,27 +122,43 @@ const Profile = () => {
             </div>
             
             {/* User stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full md:w-auto">
-              <div className="bg-[#111827] p-4 rounded-lg text-center">
-                <Dumbbell className="mx-auto mb-2 text-gymstr-orange" size={24} />
-                <div className="text-xl font-bold">{user.stats.workouts}</div>
-                <div className="text-xs text-gymstr-beige/70">Workouts</div>
+            <div className="flex flex-col space-y-4 w-full md:w-auto">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="bg-[#111827] p-4 rounded-lg text-center">
+                  <Dumbbell className="mx-auto mb-2 text-gymstr-orange" size={24} />
+                  <div className="text-xl font-bold">{user.stats.workouts}</div>
+                  <div className="text-xs text-gymstr-beige/70">Workouts</div>
+                </div>
+                <div className="bg-[#111827] p-4 rounded-lg text-center">
+                  <MapPin className="mx-auto mb-2 text-gymstr-orange" size={24} />
+                  <div className="text-xl font-bold">{user.stats.gymsVisited}</div>
+                  <div className="text-xs text-gymstr-beige/70">Gyms</div>
+                </div>
+                <div className="bg-[#111827] p-4 rounded-lg text-center">
+                  <Award className="mx-auto mb-2 text-gymstr-orange" size={24} />
+                  <div className="text-xl font-bold">{user.stats.achievements}</div>
+                  <div className="text-xs text-gymstr-beige/70">Achievements</div>
+                </div>
+                <div className="bg-[#111827] p-4 rounded-lg text-center">
+                  <BarChart2 className="mx-auto mb-2 text-gymstr-orange" size={24} />
+                  <div className="text-xl font-bold">{user.stats.streak}</div>
+                  <div className="text-xs text-gymstr-beige/70">Day Streak</div>
+                </div>
               </div>
-              <div className="bg-[#111827] p-4 rounded-lg text-center">
-                <MapPin className="mx-auto mb-2 text-gymstr-orange" size={24} />
-                <div className="text-xl font-bold">{user.stats.gymsVisited}</div>
-                <div className="text-xs text-gymstr-beige/70">Gyms</div>
-              </div>
-              <div className="bg-[#111827] p-4 rounded-lg text-center">
-                <Award className="mx-auto mb-2 text-gymstr-orange" size={24} />
-                <div className="text-xl font-bold">{user.stats.achievements}</div>
-                <div className="text-xs text-gymstr-beige/70">Achievements</div>
-              </div>
-              <div className="bg-[#111827] p-4 rounded-lg text-center">
-                <BarChart2 className="mx-auto mb-2 text-gymstr-orange" size={24} />
-                <div className="text-xl font-bold">{user.stats.streak}</div>
-                <div className="text-xs text-gymstr-beige/70">Day Streak</div>
-              </div>
+              
+              {/* Added current membership information below the stats boxes */}
+              {user.activeMembership && (
+                <div className="bg-[#111827] p-4 rounded-lg w-full">
+                  <div className="flex flex-col items-center md:items-start">
+                    <div className="text-gymstr-orange font-medium mb-1">Active Membership</div>
+                    <div className="font-semibold">{user.activeMembership.gym}</div>
+                    <div className="text-sm text-gymstr-beige/70 flex items-center gap-1 mt-1">
+                      <CalendarDays size={14} className="shrink-0" />
+                      <span>{user.activeMembership.startDate} - {user.activeMembership.endDate}</span>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
