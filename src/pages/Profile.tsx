@@ -163,81 +163,86 @@ const Profile = () => {
           </div>
         </div>
         
-        {/* Main content sections - now displayed all together */}
-        <div className="space-y-10">
-          {/* Workout History Section */}
-          <div className="space-y-4">
-            <h2 className="text-xl font-semibold">Recent Workouts</h2>
-            {workoutHistory.map((workout, index) => (
-              <Card key={index} className="bg-[#1E293B] border-white/10">
-                <CardContent className="p-4">
-                  <div className="flex flex-col md:flex-row justify-between md:items-center gap-2">
-                    <div>
-                      <div className="font-medium">{workout.workout}</div>
-                      <div className="text-sm text-gymstr-beige/70">{workout.gym}</div>
+        {/* Main content sections - modified layout with two columns */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Left column with workout history and membership history */}
+          <div className="lg:col-span-2 space-y-8">
+            {/* Workout History Section */}
+            <div className="space-y-4">
+              <h2 className="text-xl font-semibold">Recent Workouts</h2>
+              {workoutHistory.map((workout, index) => (
+                <Card key={index} className="bg-[#1E293B] border-white/10">
+                  <CardContent className="p-4">
+                    <div className="flex flex-col md:flex-row justify-between md:items-center gap-2">
+                      <div>
+                        <div className="font-medium">{workout.workout}</div>
+                        <div className="text-sm text-gymstr-beige/70">{workout.gym}</div>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <div className="flex items-center text-sm text-gymstr-beige/70">
+                          <CalendarDays size={14} className="mr-1" />
+                          {workout.date}
+                        </div>
+                        <div className="flex items-center text-sm text-gymstr-beige/70">
+                          <Clock size={14} className="mr-1" />
+                          {workout.duration}
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <div className="flex items-center text-sm text-gymstr-beige/70">
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+            
+            {/* Membership History Section */}
+            <div className="space-y-4">
+              <h2 className="text-xl font-semibold">Membership History</h2>
+              {membershipHistory.map((membership, index) => (
+                <Card key={index} className="bg-[#1E293B] border-white/10">
+                  <CardContent className="p-4">
+                    <div className="flex flex-col md:flex-row justify-between md:items-center gap-2">
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <div className="font-medium">{membership.gym}</div>
+                          <Badge 
+                            className={
+                              membership.status === 'Active' ? "bg-[#22C55E]/20 text-[#22C55E]" :
+                              membership.status === 'Expired' ? "bg-red-500/20 text-red-500" : 
+                              "bg-blue-500/20 text-blue-500"
+                            }
+                          >
+                            {membership.status}
+                          </Badge>
+                        </div>
+                        <div className="text-sm text-gymstr-beige/70">{membership.type} Membership</div>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-gymstr-beige/70">
                         <CalendarDays size={14} className="mr-1" />
-                        {workout.date}
-                      </div>
-                      <div className="flex items-center text-sm text-gymstr-beige/70">
-                        <Clock size={14} className="mr-1" />
-                        {workout.duration}
+                        {`${membership.startDate} - ${membership.endDate}`}
                       </div>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
           
-          {/* Membership History Section */}
-          <div className="space-y-4">
-            <h2 className="text-xl font-semibold">Membership History</h2>
-            {membershipHistory.map((membership, index) => (
-              <Card key={index} className="bg-[#1E293B] border-white/10">
-                <CardContent className="p-4">
-                  <div className="flex flex-col md:flex-row justify-between md:items-center gap-2">
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <div className="font-medium">{membership.gym}</div>
-                        <Badge 
-                          className={
-                            membership.status === 'Active' ? "bg-[#22C55E]/20 text-[#22C55E]" :
-                            membership.status === 'Expired' ? "bg-red-500/20 text-red-500" : 
-                            "bg-blue-500/20 text-blue-500"
-                          }
-                        >
-                          {membership.status}
-                        </Badge>
-                      </div>
-                      <div className="text-sm text-gymstr-beige/70">{membership.type} Membership</div>
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-gymstr-beige/70">
-                      <CalendarDays size={14} className="mr-1" />
-                      {`${membership.startDate} - ${membership.endDate}`}
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-          
-          {/* Achievements Section */}
+          {/* Right column with achievements */}
           <div className="space-y-4">
             <h2 className="text-xl font-semibold">Your Achievements</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="space-y-4">
               {achievements.map((achievement, index) => (
                 <Card key={index} className="bg-[#1E293B] border-white/10">
                   <CardContent className="p-4">
-                    <div className="flex flex-col items-center text-center">
-                      <div className="text-4xl mb-3">{achievement.icon}</div>
-                      <div className="font-medium">{achievement.name}</div>
-                      <div className="text-sm text-gymstr-beige/70 mb-2">{achievement.description}</div>
-                      <div className="text-xs text-gymstr-beige/50 flex items-center">
-                        <CalendarDays size={12} className="mr-1" />
-                        Achieved on {achievement.date}
+                    <div className="flex items-center gap-4">
+                      <div className="text-4xl">{achievement.icon}</div>
+                      <div className="flex-1">
+                        <div className="font-medium">{achievement.name}</div>
+                        <div className="text-sm text-gymstr-beige/70">{achievement.description}</div>
+                        <div className="text-xs text-gymstr-beige/50 flex items-center mt-1">
+                          <CalendarDays size={12} className="mr-1" />
+                          {achievement.date}
+                        </div>
                       </div>
                     </div>
                   </CardContent>
