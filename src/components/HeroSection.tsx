@@ -1,6 +1,7 @@
 
 import React from 'react';
 import Button from './Button';
+import LoginModal from './LoginModal';
 
 const HeroSection = () => {
   return (
@@ -22,9 +23,11 @@ const HeroSection = () => {
               Decentralize your workout with Gymstr. Access thousands of gyms worldwide with blockchain-powered freedom.
             </p>
             <div className="flex flex-wrap gap-4 pt-4">
-              <Button size="lg">
-                Find Your Gym
-              </Button>
+              <LoginModal>
+                <Button size="lg">
+                  Find Your Gym
+                </Button>
+              </LoginModal>
             </div>
             <p className="text-gymstr-beige/60 text-sm">
               No credit card required. Cancel anytime. All payments made by Nostr.
