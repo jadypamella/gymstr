@@ -11,6 +11,14 @@ import {
 import { Button } from "@/components/ui/button";
 import { Star, MapPin, Zap } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  type CarouselApi
+} from "@/components/ui/carousel";
 
 export interface GymDetailsProps {
   id?: number;
@@ -36,7 +44,8 @@ export function GymDetailsDialog({ gym, open, onOpenChange, onJoin }: GymDetails
   if (!gym) return null;
 
   const galleryImages = gym.gallery || [gym.image];
-  const [selectedMembership, setSelectedMembership] = useState('monthly');
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
   
   const membershipOptions = {
     monthly: {
@@ -59,6 +68,20 @@ export function GymDetailsDialog({ gym, open, onOpenChange, onJoin }: GymDetails
     }
   };
   
+  React.useEffect(() => {
+    if (!api) {
+      return;
+    }
+ 
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap());
+    });
+  }, [api]);
+
+  const goToSlide = (index: number) => {
+    api?.scrollTo(index);
+  };
+  
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="bg-[#1E293B] text-[#E2E8F0] border-white/10 max-w-3xl">
@@ -71,25 +94,39 @@ export function GymDetailsDialog({ gym, open, onOpenChange, onJoin }: GymDetails
           </DialogDescription>
         </DialogHeader>
         
-        <div className="relative aspect-video rounded-lg overflow-hidden">
-          <img 
-            src={galleryImages[0]} 
-            alt={gym.name} 
-            className="w-full h-full object-cover"
-          />
-          {galleryImages.length > 1 && (
-            <div className="absolute bottom-3 right-3 flex gap-1">
-              {galleryImages.slice(1).map((image, idx) => (
-                <div key={idx} className="w-12 h-8 rounded overflow-hidden border-2 border-white/80">
+        <div className="relative rounded-lg overflow-hidden">
+          <Carousel className="w-full" setApi={setApi}>
+            <CarouselContent>
+              {galleryImages.map((image, index) => (
+                <CarouselItem key={index}>
+                  <div className="aspect-video relative rounded-lg overflow-hidden">
+                    <img 
+                      src={image} 
+                      alt={`${gym.name} ${index + 1}`} 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <div className="absolute bottom-4 right-4 flex gap-2 z-10">
+              {galleryImages.map((image, idx) => (
+                <div 
+                  key={idx} 
+                  className={`w-12 h-8 rounded overflow-hidden border-2 cursor-pointer transition-all ${current === idx ? 'border-gymstr-orange scale-110' : 'border-white/80 hover:border-white'}`}
+                  onClick={() => goToSlide(idx)}
+                >
                   <img 
                     src={image} 
-                    alt={`${gym.name} ${idx + 2}`}
+                    alt={`${gym.name} thumbnail ${idx + 1}`}
                     className="w-full h-full object-cover"
                   />
                 </div>
               ))}
             </div>
-          )}
+            <CarouselPrevious className="absolute left-4 bg-black/50 hover:bg-black/70 border-none text-white" />
+            <CarouselNext className="absolute right-4 bg-black/50 hover:bg-black/70 border-none text-white" />
+          </Carousel>
         </div>
         
         <div className="flex items-center justify-between">
