@@ -13,7 +13,11 @@ import {
   Globe,
   Lock,
   Zap,
-  CheckCircle
+  CheckCircle,
+  CalendarDays,
+  Dumbbell,
+  Award,
+  BarChart2
 } from 'lucide-react';
 import Footer from '@/components/Footer';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -24,6 +28,7 @@ import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from '@/components/ui/badge';
 import LoginModal from '@/components/LoginModal';
 
 const Dashboard = () => {
@@ -36,10 +41,19 @@ const Dashboard = () => {
   const user = {
     name: "Alex Johnson",
     location: "São Paulo, Brazil",
+    memberSince: "January 2024",
     membershipActive: true,
     activeGym: "PowerFit Gym",
     lastCheckIn: "Today, 8:30am",
-    avatarUrl: "/lovable-uploads/35320248-e39b-4528-ac5c-40dce0880d8b.png"
+    avatarUrl: "/lovable-uploads/35320248-e39b-4528-ac5c-40dce0880d8b.png",
+    bio: "Fitness enthusiast with a passion for weightlifting and functional training. Always looking for new gyms to try out while traveling.",
+    stats: {
+      workouts: 137,
+      gymsVisited: 12,
+      achievements: 8,
+      streak: 14
+    },
+    interests: ["Weightlifting", "Functional Training", "CrossFit"]
   };
   
   const membershipOptions = {
@@ -287,41 +301,89 @@ const Dashboard = () => {
       <main className="flex-1 overflow-auto">
         <div className="container mx-auto px-4 py-6 space-y-10">
           <section className="bg-[#1E293B] rounded-lg p-6 border border-white/10">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-              <div className="flex items-center space-x-4">
+            <div className="flex flex-col md:flex-row gap-6">
+              <div className="flex flex-col md:flex-row gap-6">
                 <div className="relative">
-                  <Avatar className="h-16 w-16 border-4 border-gymstr-orange">
+                  <Avatar className="w-24 h-24 border-4 border-gymstr-orange">
                     <AvatarImage 
                       src={user.avatarUrl} 
                       alt={user.name} 
                       className="object-cover"
                     />
                     <AvatarFallback>
-                      <User className="h-8 w-8" />
+                      <User className="h-12 w-12" />
                     </AvatarFallback>
                   </Avatar>
-                  <div className="absolute -bottom-1 -right-1 bg-[#22C55E] rounded-full p-1">
+                  <div className="absolute -bottom-2 -right-2 bg-[#22C55E] rounded-full p-1.5 border-2 border-[#1E293B]">
                     <CheckCircle className="w-4 h-4 text-white" />
                   </div>
                 </div>
+                
                 <div>
-                  <h1 className="text-2xl font-bold">{user.name}</h1>
-                  <p className="text-[#E2E8F0]/70 flex items-center gap-1">
-                    <MapPin size={16} /> {user.location}
-                  </p>
+                  <h1 className="text-2xl font-bold mb-1">{user.name}</h1>
+                  <div className="flex items-center space-x-4 mb-2">
+                    <div className="flex items-center">
+                      <MapPin size={16} className="mr-1" />
+                      <span className="text-[#E2E8F0]/70">{user.location}</span>
+                    </div>
+                    <div className="text-[#E2E8F0]/50">•</div>
+                    <div className="flex items-center">
+                      <CalendarDays size={16} className="mr-1" />
+                      <span className="text-[#E2E8F0]/70">Member since {user.memberSince}</span>
+                    </div>
+                  </div>
+                  <p className="text-[#E2E8F0]/80 max-w-2xl mb-3">{user.bio}</p>
+                  
+                  <div className="flex gap-2 mb-3">
+                    {user.interests.map((interest, index) => (
+                      <Badge key={index} className="bg-gymstr-orange/20 text-gymstr-orange hover:bg-gymstr-orange/30">
+                        {interest}
+                      </Badge>
+                    ))}
+                  </div>
+                  
+                  <div className="flex items-center p-2 px-3 bg-[#111827]/60 rounded-lg max-w-md">
+                    <CheckCircle size={16} className="text-gymstr-orange mr-2" />
+                    <div>
+                      <div className="text-sm font-medium">Last Check-in: {user.activeGym}</div>
+                      <div className="text-xs text-[#E2E8F0]/70">{user.lastCheckIn}</div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className="flex flex-col items-start md:items-end">
-                <div className="bg-[#22C55E]/20 text-[#22C55E] px-3 py-1 rounded-full text-sm font-medium flex items-center gap-1">
-                  {user.membershipActive ? (
-                    <>
-                      <CheckCircle className="w-3 h-3" /> Active Membership: {user.activeGym}
-                    </>
-                  ) : (
-                    "No Active Membership"
-                  )}
+              
+              <div className="ml-auto flex-shrink-0">
+                <div className="grid grid-cols-4 gap-4">
+                  <div className="bg-[#111827] p-4 rounded-lg text-center">
+                    <Dumbbell className="mx-auto mb-2 text-gymstr-orange" size={24} />
+                    <div className="text-xl font-bold">{user.stats.workouts}</div>
+                    <div className="text-xs text-[#E2E8F0]/70">Workouts</div>
+                  </div>
+                  <div className="bg-[#111827] p-4 rounded-lg text-center">
+                    <MapPin className="mx-auto mb-2 text-gymstr-orange" size={24} />
+                    <div className="text-xl font-bold">{user.stats.gymsVisited}</div>
+                    <div className="text-xs text-[#E2E8F0]/70">Gyms</div>
+                  </div>
+                  <div className="bg-[#111827] p-4 rounded-lg text-center">
+                    <Award className="mx-auto mb-2 text-gymstr-orange" size={24} />
+                    <div className="text-xl font-bold">{user.stats.achievements}</div>
+                    <div className="text-xs text-[#E2E8F0]/70">Achievements</div>
+                  </div>
+                  <div className="bg-[#111827] p-4 rounded-lg text-center">
+                    <BarChart2 className="mx-auto mb-2 text-gymstr-orange" size={24} />
+                    <div className="text-xl font-bold">{user.stats.streak}</div>
+                    <div className="text-xs text-[#E2E8F0]/70">Day Streak</div>
+                  </div>
                 </div>
-                <p className="text-sm text-[#E2E8F0]/70 mt-1">Last check-in: {user.lastCheckIn}</p>
+                
+                <div className="bg-[#111827] p-4 rounded-lg mt-4">
+                  <div className="text-gymstr-orange font-medium mb-1">Active Membership</div>
+                  <div>{user.activeGym}</div>
+                  <div className="text-sm text-[#E2E8F0]/70 flex items-center gap-1 mt-1">
+                    <CalendarDays size={14} className="shrink-0" />
+                    <span>March 1, 2025 - April 30, 2025</span>
+                  </div>
+                </div>
               </div>
             </div>
           </section>
