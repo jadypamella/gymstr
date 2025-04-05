@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import Button from './Button';
 import GymCard from './GymCard';
@@ -152,7 +153,7 @@ const PartnerSection = () => {
         <Sheet open={showMembershipDialog} onOpenChange={setShowMembershipDialog}>
           <SheetContent className="sm:max-w-md bg-[#1E293B] text-[#E2E8F0] border-l-white/10">
             <SheetHeader>
-              <SheetTitle className="text-[#E2E8F0]">Start Membership</SheetTitle>
+              <SheetTitle className="text-[#E2E8F0]">Membership</SheetTitle>
               <SheetDescription className="text-[#E2E8F0]/70">
                 Subscribe to {selectedGym.name}
               </SheetDescription>
