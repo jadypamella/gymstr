@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import Button from './Button';
+import LoginModal from './LoginModal';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -56,9 +57,11 @@ const Navbar = () => {
           <a href="#pricing" className="text-gymstr-beige hover:text-gymstr-orange transition-colors">
             Pricing
           </a>
-          <Button variant="outline" size="sm" href="#login">
-            Login
-          </Button>
+          <LoginModal>
+            <Button variant="outline" size="sm">
+              Login
+            </Button>
+          </LoginModal>
         </nav>
 
         {/* Mobile Menu Button */}
@@ -114,9 +117,11 @@ const Navbar = () => {
             Pricing
           </a>
           <div className="pt-2">
-            <Button variant="outline" href="#login" className="w-full">
-              Login
-            </Button>
+            <LoginModal>
+              <Button variant="outline" className="w-full">
+                Login
+              </Button>
+            </LoginModal>
           </div>
         </div>
       </div>
