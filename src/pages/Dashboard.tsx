@@ -16,6 +16,7 @@ import {
   Lock,
   Zap
 } from 'lucide-react';
+import Footer from '@/components/Footer';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -25,9 +26,17 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from '
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const [selectedGym, setSelectedGym] = useState(null);
+  const [selectedGym, setSelectedGym] = useState<any>(null);
   const [showMembershipDialog, setShowMembershipDialog] = useState(false);
   const [showGymDetails, setShowGymDetails] = useState(false);
+  
+  // Mock data for the user
+  const user = {
+    name: "Alex Johnson",
+    location: "São Paulo, Brazil",
+    membershipActive: true,
+    lastCheckIn: "Today, 8:30am"
+  };
   
   // Mock data for gyms - in a real app this would come from an API
   const nearbyGyms = [
@@ -257,6 +266,24 @@ const Dashboard = () => {
       {/* Main Content */}
       <main className="flex-1 overflow-auto">
         <div className="container mx-auto px-4 py-6 space-y-10">
+          {/* User information section */}
+          <section className="bg-[#1E293B] rounded-lg p-6 border border-white/10">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+              <div>
+                <h1 className="text-2xl font-bold">Welcome, {user.name}</h1>
+                <p className="text-[#E2E8F0]/70 flex items-center gap-1">
+                  <MapPin size={16} /> {user.location}
+                </p>
+              </div>
+              <div className="flex flex-col items-start md:items-end">
+                <div className="bg-[#22C55E]/20 text-[#22C55E] px-3 py-1 rounded-full text-sm font-medium">
+                  {user.membershipActive ? "Active Membership" : "No Active Membership"}
+                </div>
+                <p className="text-sm text-[#E2E8F0]/70 mt-1">Last check-in: {user.lastCheckIn}</p>
+              </div>
+            </div>
+          </section>
+
           {/* Map and Nearby Gyms Section */}
           <section>
             <h2 className="text-2xl font-bold mb-6">Gyms Near You</h2>
@@ -269,7 +296,7 @@ const Dashboard = () => {
                 width="100%" 
                 height="100%" 
                 className="border-0"
-                allowFullScreen="" 
+                allowFullScreen={true} 
                 loading="lazy" 
                 referrerPolicy="no-referrer-when-downgrade"
               ></iframe>
@@ -453,13 +480,13 @@ const Dashboard = () => {
                   <CardFooter className="p-4 pt-0 flex gap-2">
                     <Button 
                       variant="outline" 
-                      className="flex-1 bg-transparent text-[#F7931A] border-[#F7931A] hover:bg-[#F7931A]/10"
+                      className="w-1/2 bg-transparent text-[#F7931A] border-[#F7931A] hover:bg-[#F7931A]/10"
                       onClick={() => openGymDetails(gym)}
                     >
                       View Details
                     </Button>
                     <Button 
-                      className="flex-1 bg-[#22C55E] hover:bg-[#22C55E]/90 text-white"
+                      className="w-1/2 bg-[#22C55E] hover:bg-[#22C55E]/90 text-white"
                       onClick={() => openMembershipDialog(gym)}
                     >
                       Start Membership
@@ -471,6 +498,9 @@ const Dashboard = () => {
           </section>
         </div>
       </main>
+
+      {/* Footer */}
+      <Footer />
 
       {/* Gym Details Dialog */}
       {selectedGym && (

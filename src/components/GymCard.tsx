@@ -59,9 +59,14 @@ const GymCard = ({ name, image, rating, location, amenities, distance, acceptsLi
             </span>
           ))}
         </div>
-        <button className="mt-4 w-full py-2 rounded-md bg-gymstr-orange text-white font-medium hover:bg-gymstr-orange/90 transition-colors">
-          View Details
-        </button>
+        <div className="mt-4 flex gap-2">
+          <button className="w-1/2 py-2 rounded-md bg-transparent border border-gymstr-orange text-gymstr-orange font-medium hover:bg-gymstr-orange/10 transition-colors">
+            View Details
+          </button>
+          <button className="w-1/2 py-2 rounded-md bg-[#22C55E] text-white font-medium hover:bg-[#22C55E]/90 transition-colors">
+            Start Membership
+          </button>
+        </div>
       </div>
     </div>
   );
