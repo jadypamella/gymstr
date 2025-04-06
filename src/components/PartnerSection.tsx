@@ -1,4 +1,5 @@
 import { useState } from "react";
+import QRCode from "react-qr-code";
 import Button from "./Button";
 import GymCard from "./GymCard";
 import GymDetailsDialog, { GymDetailsProps } from "./GymDetailsDialog";
@@ -19,6 +20,7 @@ const PartnerSection = () => {
   const [showGymDetails, setShowGymDetails] = useState(false);
   const [showMembershipDialog, setShowMembershipDialog] = useState(false);
   const [selectedMembership, setSelectedMembership] = useState("monthly");
+  const [invoice, setInvoice] = useState("");
 
   const TARGET_LNURL = "https://getalby.com/.well-known/lnurlp/vonnatur";
   const TARGET_PUBKEY =
@@ -180,6 +182,7 @@ const PartnerSection = () => {
       if (!callbackJson.pr) {
         throw new Error("Falha ao obter invoice");
       }
+      setInvoice(callbackJson.pr);
     } catch (err) {
       console.log(`❌ Erro: ${err.message || err}`);
     }
@@ -304,8 +307,8 @@ const PartnerSection = () => {
                   </div>
 
                   <div className="rounded-lg bg-white p-4 flex justify-center">
-                    <div className="w-36 h-36 bg-black flex items-center justify-center">
-                      <Zap size={48} className="text-white" />
+                    <div className="w-72 h-72 flex items-center justify-center">
+                      <QRCode value={invoice} size={256} level="L" />
                     </div>
                   </div>
                   <button className="mt-3 text-sm text-center w-full py-2 border border-white/20 rounded-md hover:bg-white/5 transition-colors">
