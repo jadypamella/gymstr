@@ -24,6 +24,7 @@ const PartnerSection = () => {
   const TARGET_PUBKEY =
     "79f00d3f5a19ec806189fcab03c1be4ff81d18ee4f653c88fac41fe03570f432";
   const RELAY_URL = "wss://nos.lol";
+  const DEFAULT_SATS = 100;
   const partnerGyms = [
     {
       name: "FitLife Studio",
@@ -144,6 +145,15 @@ const PartnerSection = () => {
 
       if (!lnurlData.callback) throw new Error("LNURL inválido");
 
+      const minSendable = parseInt(lnurlData.minSendable);
+      const maxSendable = parseInt(lnurlData.maxSendable);
+      const desiredMsats = DEFAULT_SATS * 1000;
+
+      if (desiredMsats < minSendable || desiredMsats > maxSendable) {
+        throw new Error(
+          `⚠️ Valor inválido: ${DEFAULT_SATS} sats. Permitido entre ${minSendable / 1000} e ${maxSendable / 1000} sats.`,
+        );
+      }
       // Passo 3: montar zap request (evento 9734)
       const zapRequest = {
         kind: 9734,
