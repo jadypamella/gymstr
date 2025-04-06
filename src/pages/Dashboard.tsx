@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import QRCode from "react-qr-code";
 import { bech32 } from "bech32";
 import axios from "axios";
 import {
@@ -52,6 +53,7 @@ const Dashboard = () => {
   const [showMembershipDialog, setShowMembershipDialog] = useState(false);
   const [showGymDetails, setShowGymDetails] = useState(false);
   const [selectedMembership, setSelectedMembership] = useState("monthly");
+  const [invoice, setInvoice] = useState("");
   const [user, setUser] = useState({
     name: "Alex Johnson",
     location: "São Paulo, Brazil",
@@ -69,6 +71,12 @@ const Dashboard = () => {
     },
     interests: ["Weightlifting", "Functional Training", "CrossFit"],
   });
+
+  const TARGET_LNURL = "https://getalby.com/.well-known/lnurlp/vonnatur";
+  const TARGET_PUBKEY =
+    "79f00d3f5a19ec806189fcab03c1be4ff81d18ee4f653c88fac41fe03570f432";
+  const RELAY_URL = "wss://nos.lol";
+  const DEFAULT_SATS = 100;
 
   const membershipOptions = {
     monthly: {
@@ -306,9 +314,62 @@ const Dashboard = () => {
     setUser({ ...user, name: displayName });
   }, [pubkeyToNpub]);
 
+  const handlePayment = async () => {
+    try {
+      // Passo 1: obter chave pública do usuário (remetente)
+      const senderPubkey = await (window as any).nostr.getPublicKey();
+
+      // Passo 2: obter LNURL metadata
+      const lnurlRes = await fetch(TARGET_LNURL);
+      const lnurlData = await lnurlRes.json();
+
+      if (!lnurlData.callback) throw new Error("LNURL inválido");
+
+      const minSendable = parseInt(lnurlData.minSendable);
+      const maxSendable = parseInt(lnurlData.maxSendable);
+      const desiredMsats = DEFAULT_SATS * 1000;
+
+      if (desiredMsats < minSendable || desiredMsats > maxSendable) {
+        throw new Error(
+          `⚠️ Valor inválido: ${DEFAULT_SATS} sats. Permitido entre ${minSendable / 1000} e ${maxSendable / 1000} sats.`,
+        );
+      }
+      // Passo 3: montar zap request (evento 9734)
+      const zapRequest = {
+        kind: 9734,
+        created_at: Math.floor(Date.now() / 1000),
+        content: "Zap automático via React + NIP-57",
+        pubkey: senderPubkey,
+        tags: [
+          ["p", TARGET_PUBKEY],
+          ["amount", desiredMsats],
+          ["relays", RELAY_URL],
+        ],
+      };
+
+      const signedEvent = await (window as any).nostr.signEvent(zapRequest);
+
+      // Passo 4: chamar o callback LNURL com o evento
+      const callbackUrl = new URL(lnurlData.callback);
+      callbackUrl.searchParams.set("amount", desiredMsats.toString());
+      callbackUrl.searchParams.set("nostr", JSON.stringify(signedEvent));
+
+      const callbackRes = await fetch(callbackUrl.toString());
+      const callbackJson = await callbackRes.json();
+
+      if (!callbackJson.pr) {
+        throw new Error("Falha ao obter invoice");
+      }
+      setInvoice(callbackJson.pr);
+    } catch (err) {
+      console.log(`❌ Erro: ${err.message || err}`);
+    }
+  };
+
   useEffect(() => {
     getUserDetails();
-  }, [getUserDetails]);
+    handlePayment();
+  }, []);
 
   return (
     <div className="flex flex-col min-h-screen bg-[#0F172A] text-[#E2E8F0]">
@@ -937,7 +998,7 @@ const Dashboard = () => {
 
                   <div className="rounded-lg bg-white p-4 flex justify-center">
                     <div className="w-36 h-36 bg-black flex items-center justify-center">
-                      <Zap size={48} className="text-white" />
+                      <QRCode value={invoice} size={256} level="L" />
                     </div>
                   </div>
                   <button className="mt-4 text-sm text-center w-full py-2 border border-white/20 rounded-md hover:bg-white/5 transition-colors">
