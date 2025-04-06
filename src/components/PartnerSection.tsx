@@ -21,6 +21,7 @@ const PartnerSection = () => {
   const [showMembershipDialog, setShowMembershipDialog] = useState(false);
   const [selectedMembership, setSelectedMembership] = useState("monthly");
   const [invoice, setInvoice] = useState("");
+  const [isPayed, setIsPayed] = useState(false);
 
   const TARGET_LNURL = "https://getalby.com/.well-known/lnurlp/vonnatur";
   const TARGET_PUBKEY =
@@ -188,6 +189,14 @@ const PartnerSection = () => {
     }
   };
 
+  const handleConfirmPayment = () => {
+    setIsPayed(true);
+    setTimeout(() => {
+      setShowMembershipDialog(false);
+      setIsPayed(false);
+    }, 1500);
+  };
+
   useEffect(() => {
     handlePayment();
   }, []);
@@ -312,7 +321,11 @@ const PartnerSection = () => {
 
                   <div className="rounded-lg bg-white p-4 flex justify-center">
                     <div className="w-72 h-72 flex items-center justify-center">
-                      <QRCode value={invoice} size={256} level="L" />
+                      {isPayed ? (
+                        <Check size={56} className="text-[#22C55E]" />
+                      ) : (
+                        <QRCode value={invoice} size={256} level="L" />
+                      )}
                     </div>
                   </div>
                   <button className="mt-3 text-sm text-center w-full py-2 border border-white/20 rounded-md hover:bg-white/5 transition-colors">
@@ -400,7 +413,7 @@ const PartnerSection = () => {
               </button>
               <button
                 className="flex-1 py-3 bg-[#22C55E] rounded-md text-white hover:bg-[#22C55E]/90 transition-colors"
-                onClick={() => handlePayment()}
+                onClick={() => handleConfirmPayment()}
               >
                 Confirm and Pay
               </button>
