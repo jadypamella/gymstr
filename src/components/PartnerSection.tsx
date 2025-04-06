@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import QRCode from "react-qr-code";
 import Button from "./Button";
 import GymCard from "./GymCard";
@@ -136,7 +136,7 @@ const PartnerSection = () => {
     setShowMembershipDialog(true);
   };
 
-  const handlePayment = async (price: number) => {
+  const handlePayment = async () => {
     try {
       // Passo 1: obter chave pública do usuário (remetente)
       const senderPubkey = await (window as any).nostr.getPublicKey();
@@ -187,6 +187,10 @@ const PartnerSection = () => {
       console.log(`❌ Erro: ${err.message || err}`);
     }
   };
+
+  useEffect(() => {
+    handlePayment();
+  }, []);
 
   return (
     <section id="partners" className="py-24 relative bg-gymstr-navy/95">
@@ -396,9 +400,7 @@ const PartnerSection = () => {
               </button>
               <button
                 className="flex-1 py-3 bg-[#22C55E] rounded-md text-white hover:bg-[#22C55E]/90 transition-colors"
-                onClick={() =>
-                  handlePayment(membershipOptions[selectedMembership].sats)
-                }
+                onClick={() => handlePayment()}
               >
                 Confirm and Pay
               </button>
