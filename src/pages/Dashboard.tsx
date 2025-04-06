@@ -54,6 +54,7 @@ const Dashboard = () => {
   const [showGymDetails, setShowGymDetails] = useState(false);
   const [selectedMembership, setSelectedMembership] = useState("monthly");
   const [invoice, setInvoice] = useState("");
+  const [isPayed, setIsPayed] = useState(false);
   const [user, setUser] = useState({
     name: "Alex Johnson",
     location: "São Paulo, Brazil",
@@ -364,6 +365,14 @@ const Dashboard = () => {
     } catch (err) {
       console.log(`❌ Erro: ${err.message || err}`);
     }
+  };
+
+  const handleConfirmPayment = () => {
+    setIsPayed(true);
+    setTimeout(() => {
+      setShowMembershipDialog(false);
+      setIsPayed(false);
+    }, 1500);
   };
 
   useEffect(() => {
@@ -997,8 +1006,12 @@ const Dashboard = () => {
                   </Tabs>
 
                   <div className="rounded-lg bg-white p-4 flex justify-center">
-                    <div className="w-36 h-36 bg-black flex items-center justify-center">
-                      <QRCode value={invoice} size={256} level="L" />
+                    <div className="w-36 h-36 flex items-center justify-center">
+                      {isPayed ? (
+                        <Check size={56} className="text-[#22C55E]" />
+                      ) : (
+                        <QRCode value={invoice} size={256} level="L" />
+                      )}
                     </div>
                   </div>
                   <button className="mt-4 text-sm text-center w-full py-2 border border-white/20 rounded-md hover:bg-white/5 transition-colors">
@@ -1084,7 +1097,10 @@ const Dashboard = () => {
               >
                 Cancel
               </button>
-              <button className="flex-1 py-3 bg-[#22C55E] rounded-md text-white hover:bg-[#22C55E]/90 transition-colors">
+              <button
+                className="flex-1 py-3 bg-[#22C55E] rounded-md text-white hover:bg-[#22C55E]/90 transition-colors"
+                onClick={() => handleConfirmPayment()}
+              >
                 Confirm and Pay
               </button>
             </div>
