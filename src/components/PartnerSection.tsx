@@ -152,7 +152,7 @@ const PartnerSection = () => {
         pubkey: senderPubkey,
         tags: [
           ["p", TARGET_PUBKEY],
-          ["amount", "10"],
+          ["amount", "1000"],
           ["relays", RELAY_URL],
         ],
       };
