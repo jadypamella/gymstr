@@ -162,7 +162,7 @@ const PartnerSection = () => {
         pubkey: senderPubkey,
         tags: [
           ["p", TARGET_PUBKEY],
-          ["amount", "1001"],
+          ["amount", desiredMsats],
           ["relays", RELAY_URL],
         ],
       };
@@ -171,7 +171,7 @@ const PartnerSection = () => {
 
       // Passo 4: chamar o callback LNURL com o evento
       const callbackUrl = new URL(lnurlData.callback);
-      callbackUrl.searchParams.set("amount", price.toString());
+      callbackUrl.searchParams.set("amount", desiredMsats.toString());
       callbackUrl.searchParams.set("nostr", JSON.stringify(signedEvent));
 
       const callbackRes = await fetch(callbackUrl.toString());
